@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:turbo_waiter/core/helpers/assets.dart';
 import 'package:turbo_waiter/core/helpers/widget_extensions.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
+import 'package:turbo_waiter/gen/assets.gen.dart';
 
 class LogoWithBackButtonSection extends StatelessWidget {
   const LogoWithBackButtonSection({super.key});
@@ -16,7 +16,7 @@ class LogoWithBackButtonSection extends StatelessWidget {
       child: Stack(
         children: [
           Image.asset(
-            Assets.assetsImagesLoginImage,
+            Assets.images.appLogoFork.path,
             fit: BoxFit.fill,
             height: 29.h,
             width: 100.w,
@@ -33,7 +33,7 @@ class LogoWithBackButtonSection extends StatelessWidget {
             ),
           ),
           Image.asset(
-            Assets.logo,
+            Assets.images.appIconCirclepng.path,
             color: ColorsManager.primaryColor,
             colorBlendMode: BlendMode.srcIn,
           ).center().paddingOnly(top: 5.h),

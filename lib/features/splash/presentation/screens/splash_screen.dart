@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turbo_waiter/core/helpers/extensions.dart';
-import 'package:turbo_waiter/core/routing/routes.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/features/splash/presentation/logic/splash_cubit.dart';
 import 'package:turbo_waiter/features/splash/presentation/widgets/enhanced_splash_content.dart';
@@ -47,11 +45,11 @@ class _SplashScreenState extends State<SplashScreen>
     // Start fade out animation
     await _fadeController.forward();
 
-    if (isLogged) {
-      context.pushReplacementNamed(Routes.homeScreen);
-    } else {
-      context.pushReplacementNamed(Routes.loginScreen);
-    }
+    // if (isLogged) {
+    //   context.pushReplacementNamed(Routes.homeScreen);
+    // } else {
+    //   context.pushReplacementNamed(Routes.loginScreen);
+    // }
   }
 
   @override
