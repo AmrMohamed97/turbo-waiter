@@ -7,7 +7,6 @@ import 'package:delightful_toast/toast/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
-import 'package:turbo_waiter/core/helpers/assets.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';
 import 'package:turbo_waiter/core/helpers/spacing.dart';
 import 'package:turbo_waiter/core/helpers/widget_extensions.dart';
@@ -16,6 +15,8 @@ import 'package:turbo_waiter/core/theming/font_weight_helper.dart';
 import 'package:turbo_waiter/core/theming/styles.dart';
 import 'package:turbo_waiter/core/widgets/app_text_button.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../../gen/assets.gen.dart';
 
 class AppDialogs {
   static Future<void> showQuestionnaireDialog(
@@ -349,9 +350,7 @@ class AppDialogs {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Center(
-                            child: SvgPicture.asset(Assets.assetsSvgError),
-                          ),
+                          Center(child: SvgPicture.asset(Assets.svg.error)),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 3.w),
                             child: Column(

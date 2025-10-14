@@ -12,9 +12,6 @@ import 'package:turbo_waiter/features/auth/data/datasource/auth_remote_datasourc
 import 'package:turbo_waiter/features/auth/data/repo/auth_repo_impl.dart';
 import 'package:turbo_waiter/features/auth/presentation/logic/cubit/auth_cubit.dart';
 import 'package:turbo_waiter/features/splash/presentation/logic/splash_cubit.dart';
-import 'package:turbo_waiter/features/ticket_details/data/datasources/get_remote_ticket_details.dart';
-import 'package:turbo_waiter/features/ticket_details/data/repositories/get_ticket_details_repo_imple.dart';
-import 'package:turbo_waiter/features/ticket_details/domain/repositories/get_ticket_details_repo.dart';
 
 final getIt = GetIt.instance;
 
@@ -49,11 +46,7 @@ Future<void> setupGetIt() async {
     () => AuthCubit(authRepoImpl: getIt(), storage: getIt()),
   );
 
-  getIt.registerFactory<GetTicketDetailsRepo>(
-    () => GetTicketDetailsRepoImple(
-      getRemoteTicketDetails: GetRemoteTicketDetailsImple(dio),
-    ),
-  );
+  
   getIt.registerFactory<EnumsRepo>(
     () => EnumsRepo(
       enumsRemoteImple: EnumsRemoteImple(apiService: getIt<ApiService>()),

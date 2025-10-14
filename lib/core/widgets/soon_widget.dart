@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
-import 'package:turbo_waiter/core/helpers/assets.dart';
 import 'package:turbo_waiter/core/helpers/spacing.dart';
 import 'package:turbo_waiter/core/helpers/widget_extensions.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/core/theming/font_weight_helper.dart';
 import 'package:turbo_waiter/core/theming/styles.dart';
+import 'package:turbo_waiter/gen/assets.gen.dart';
 
 class SoonWidget extends StatelessWidget {
   const SoonWidget({super.key});
@@ -26,25 +26,57 @@ class SoonWidget extends StatelessWidget {
         ],
       ),
       child: Center(
-        child: Column(
-          spacing: 1.h,
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(Assets.logo, width: 25.w),
-
-            // Icon(
-            //   Icons.construction,
-            //   size: 25.w,
-            //   color: ColorsManager.mainHomeColor,
-            // ),
-            Text(
-              AppTexts.comingSoon,
-              style: TextStyles.font20LightBlackRegular.copyWith(
-                fontWeight: FontWeightHelper.extraBold,
+            // Left side - Logo
+            Expanded(
+              flex: 2,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(Assets.images.appLogoFork.path, width: 20.w),
+                    SizedBox(height: 2.h),
+                    Text(
+                      'Turbo Waiter',
+                      style: TextStyles.font20LightBlackRegular.copyWith(
+                        fontWeight: FontWeightHelper.extraBold,
+                        fontSize: 24.sp,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            verticalSpace(2),
-            const _BouncingDot(),
+
+            // Right side - Coming soon message
+            Expanded(
+              flex: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppTexts.comingSoon,
+                    style: TextStyles.font20LightBlackRegular.copyWith(
+                      fontWeight: FontWeightHelper.extraBold,
+                      fontSize: 32.sp,
+                    ),
+                  ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    'This feature is being developed\nfor the best tablet experience',
+                    style: TextStyles.font20LightBlackRegular.copyWith(
+                      fontSize: 18.sp,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  SizedBox(height: 3.h),
+                  const _BouncingDot(),
+                ],
+              ),
+            ),
           ],
         ).paddingSymmetric(vertical: 5.h, horizontal: 5.w).center(),
       ),

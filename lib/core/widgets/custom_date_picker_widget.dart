@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
-import 'package:turbo_waiter/core/helpers/assets.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -118,13 +117,12 @@ class CustomDatePickerWidget<cubit extends Cubit<states>, states>
                           : title,
                       style: hintStyle ?? TextStyles.font16fontGreyMedium,
                     ),
-                    SvgPicture.asset(
-                      Assets.assetsSvgCalendar,
-                      colorFilter: ColorFilter.mode(
-                        iconColor ?? ColorsManager.primaryColor,
-                        BlendMode.srcIn,
-                      ),
-                    ),
+                    // SvgPicture.asset(
+                    //   colorFilter: ColorFilter.mode(
+                    //     iconColor ?? ColorsManager.primaryColor,
+                    //     BlendMode.srcIn,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

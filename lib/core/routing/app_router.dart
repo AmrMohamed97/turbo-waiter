@@ -7,9 +7,6 @@ import 'package:turbo_waiter/features/auth/presentation/logic/cubit/auth_cubit.d
 import 'package:turbo_waiter/features/auth/presentation/screens/login_screen.dart';
 import 'package:turbo_waiter/features/splash/presentation/logic/splash_cubit.dart';
 import 'package:turbo_waiter/features/splash/presentation/screens/splash_screen.dart';
-import 'package:turbo_waiter/features/ticket_details/domain/repositories/get_ticket_details_repo.dart';
-import 'package:turbo_waiter/features/ticket_details/presentation/cubit/ticket_details_cubit.dart';
-import 'package:turbo_waiter/features/ticket_details/presentation/pages/ticket_details_screen.dart';
 
 class AppRouter {
   static Route generateRoute(RouteSettings settings) {
@@ -35,19 +32,7 @@ class AppRouter {
             ),
           ),
         );
-      case Routes.ticketDetailsScreen:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) {
-              final id = settings.arguments as int?;
-              return TicketDetailsCubit(
-                getTicketDetailsRepo: getIt<GetTicketDetailsRepo>(),
-                id: id ?? 23,
-              );
-            },
-            child: TicketDetailsPage(),
-          ),
-        );
+
       // case Routes.homeScreen:
       //   return MaterialPageRoute(
       //     builder: (_) => BlocProvider(

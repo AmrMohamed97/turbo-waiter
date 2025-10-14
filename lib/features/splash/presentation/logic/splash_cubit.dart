@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:turbo_waiter/core/helpers/assets.dart';
 import 'package:turbo_waiter/core/helpers/local_storage_helper.dart';
 import 'package:turbo_waiter/core/helpers/user_type.dart';
 
@@ -49,9 +48,7 @@ class SplashCubit extends Cubit<SplashState> {
 
   int currentPage = 0;
   List<String> images = [
-    Assets.sky,
-    Assets.assetsImagesBoard2,
-    Assets.assetsImagesBoard3,
+
   ];
   void changePage(int page) {
     currentPage = page;

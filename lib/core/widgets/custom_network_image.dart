@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:turbo_waiter/core/helpers/assets.dart';
 import 'package:turbo_waiter/core/networking/api_urls.dart';
+import 'package:turbo_waiter/gen/assets.gen.dart';
 // import 'package:turbo_waiter/core/theming/colors.dart';
 
 class CustomNetworkImage extends StatelessWidget {
@@ -46,7 +46,7 @@ class CustomNetworkImage extends StatelessWidget {
             child: Center(
               child: isProfile
                   ? Icon(Icons.person, color: Colors.white, size: 5.w)
-                  : Image.asset(Assets.logo),
+                  : Image.asset(Assets.images.appLogoFork.path),
             ),
           );
         },
@@ -69,7 +69,7 @@ class CustomNetworkImage extends StatelessWidget {
             ),
             child: Center(
               child: Image.asset(
-                Assets.logo,
+                Assets.images.appLogoFork.path,
                 // color: ColorsManager.primaryColor,
               ),
             ),

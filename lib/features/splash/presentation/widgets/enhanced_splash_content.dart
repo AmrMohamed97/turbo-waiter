@@ -38,23 +38,31 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
         // Sparkle effects
         _buildSparkleEffects(),
 
-        // Main content
+        // Main content - optimized for tablet landscape
         Center(
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Logo with animations
-              _buildAnimatedLogo(),
+              // Left side - Logo
+              Expanded(flex: 2, child: Center(child: _buildAnimatedLogo())),
 
-              SizedBox(height: 4.h),
+              // Right side - App name and loading
+              Expanded(
+                flex: 3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // App name with fade animation
+                    _buildAppName(),
 
-              // App name with fade animation
-              _buildAppName(),
+                    SizedBox(height: 4.h),
 
-              SizedBox(height: 6.h),
-
-              // Loading indicator
-              _buildLoadingIndicator(),
+                    // Loading indicator
+                    _buildLoadingIndicator(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -97,8 +105,8 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
             child: Opacity(
               opacity: widget.logoFadeAnimation.value,
               child: Container(
-                width: 25.w,
-                height: 25.w,
+                width: 20.w,
+                height: 20.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   boxShadow: [
@@ -159,28 +167,40 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
               Text(
                 'Turbo Waiter',
                 style: TextStyle(
-                  fontSize: 28.sp,
+                  fontSize: 36.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   fontFamily: 'tajawal',
-                  letterSpacing: 2,
+                  letterSpacing: 3,
                   shadows: [
                     Shadow(
                       color: Colors.black.withOpacity(0.3),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
+                      blurRadius: 15,
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 1.h),
+              SizedBox(height: 2.h),
               Text(
                 'Fast • Smart • Reliable',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 18.sp,
                   color: Colors.white.withOpacity(0.9),
                   fontFamily: 'tajawal',
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 1.h),
+              Text(
+                'Tablet-Optimized Restaurant Experience',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: Colors.white.withOpacity(0.7),
+                  fontFamily: 'tajawal',
                   letterSpacing: 1,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
             ],
@@ -197,8 +217,8 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
         return Opacity(
           opacity: widget.logoFadeAnimation.value,
           child: Container(
-            width: 50.w,
-            height: 4,
+            width: 40.w,
+            height: 6,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(2),
               color: Colors.white.withOpacity(0.3),

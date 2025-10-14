@@ -2,12 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:turbo_waiter/core/helpers/assets.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';
 import 'package:turbo_waiter/core/helpers/spacing.dart';
 import 'package:turbo_waiter/core/helpers/widget_extensions.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/core/theming/styles.dart';
+import 'package:turbo_waiter/gen/assets.gen.dart';
 
 class ScaffoldTransAppBar extends StatelessWidget {
   final Widget? leading, actions, body;
@@ -42,7 +42,7 @@ class ScaffoldTransAppBar extends StatelessWidget {
               AnimatedRotation(
                 turns: context.locale == Locale('en', 'US') ? 0.5 : 0,
                 duration: const Duration(milliseconds: 300),
-                child: SvgPicture.asset(Assets.assetsSvgSearchArrowBack),
+                child: SvgPicture.asset(Assets.svg.appSparkle),
               ).onTap(
                 onTap: () =>
                     (onBackPressed != null) ? onBackPressed!() : context.pop(),
