@@ -14,49 +14,28 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/backIcon.png
-  AssetGenImage get backIconPng =>
-      const AssetGenImage('assets/images/backIcon.png');
+  /// File path: assets/images/app_icon_circle_no_bg.png
+  AssetGenImage get appIconCircleNoBg =>
+      const AssetGenImage('assets/images/app_icon_circle_no_bg.png');
 
-  /// File path: assets/images/back_icon.png
-  AssetGenImage get backIconPng_ =>
-      const AssetGenImage('assets/images/back_icon.png');
+  /// File path: assets/images/app_icon_circlepng.png
+  AssetGenImage get appIconCirclepng =>
+      const AssetGenImage('assets/images/app_icon_circlepng.png');
 
-  /// File path: assets/images/logo.png
-  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
+  /// File path: assets/images/app_logo_fork.png
+  AssetGenImage get appLogoFork =>
+      const AssetGenImage('assets/images/app_logo_fork.png');
 
-  /// File path: assets/images/notAuth.png
-  AssetGenImage get notAuth => const AssetGenImage('assets/images/notAuth.png');
-
-  /// File path: assets/images/qr.png
-  AssetGenImage get qr => const AssetGenImage('assets/images/qr.png');
-
-  /// File path: assets/images/qrBorder.png
-  AssetGenImage get qrBorder =>
-      const AssetGenImage('assets/images/qrBorder.png');
-
-  /// File path: assets/images/qr_line.png
-  AssetGenImage get qrLine => const AssetGenImage('assets/images/qr_line.png');
-
-  /// File path: assets/images/sign_up_image.png
-  AssetGenImage get signUpImage =>
-      const AssetGenImage('assets/images/sign_up_image.png');
-
-  /// File path: assets/images/successImage.png
-  AssetGenImage get successImage =>
-      const AssetGenImage('assets/images/successImage.png');
+  /// File path: assets/images/app_logo_word.png
+  AssetGenImage get appLogoWord =>
+      const AssetGenImage('assets/images/app_logo_word.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
-    backIconPng,
-    backIconPng_,
-    logo,
-    notAuth,
-    qr,
-    qrBorder,
-    qrLine,
-    signUpImage,
-    successImage,
+    appIconCircleNoBg,
+    appIconCirclepng,
+    appLogoFork,
+    appLogoWord,
   ];
 }
 
@@ -79,8 +58,11 @@ class $AssetsLottieGen {
   /// File path: assets/lottie/qrLottie.json
   String get qrLottie => 'assets/lottie/qrLottie.json';
 
+  /// File path: assets/lottie/restaurant_animation.json
+  String get restaurantAnimation => 'assets/lottie/restaurant_animation.json';
+
   /// List of all assets
-  List<String> get values => [qrLottie];
+  List<String> get values => [qrLottie, restaurantAnimation];
 }
 
 class $AssetsSvgGen {

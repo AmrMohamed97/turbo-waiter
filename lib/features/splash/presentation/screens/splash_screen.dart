@@ -3,16 +3,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turbo_waiter/core/helpers/assets.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';
 import 'package:turbo_waiter/core/routing/routes.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/features/splash/presentation/logic/splash_cubit.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:turbo_waiter/features/splash/presentation/widgets/enhanced_splash_content.dart';
 
 class SplashScreen extends StatefulWidget {
   final bool getData;
-  const SplashScreen({super.key, this.getData = false});
+  final bool useLottieAnimation;
+  const SplashScreen({
+    super.key,
+    this.getData = false,
+    this.useLottieAnimation = false,
+  });
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -20,20 +24,30 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+  late AnimationController _logoController;
+  late AnimationController _particleController;
+  late AnimationController _sparkleController;
+  late AnimationController _fadeController;
+
+  late Animation<double> _logoScaleAnimation;
+  late Animation<double> _logoRotationAnimation;
+  late Animation<double> _logoFadeAnimation;
+  late Animation<double> _particleAnimation;
+  late Animation<double> _sparkleAnimation;
+  late Animation<double> _fadeAnimation;
 
   Future<void> checkFirstTime() async {
-    await Future.delayed(const Duration(seconds: 2), () async {
+    await Future.delayed(const Duration(seconds: 3), () async {
       bool isLogged = await context.read<SplashCubit>().checkIfUserLogged();
-
       goTo(isLogged);
     });
   }
 
   Future<void> goTo(bool isLogged) async {
+    // Start fade out animation
+    await _fadeController.forward();
+
     if (isLogged) {
-      // go to home screen
       context.pushReplacementNamed(Routes.homeScreen);
     } else {
       context.pushReplacementNamed(Routes.loginScreen);
@@ -43,18 +57,62 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+
+    // Logo animations
+    _logoController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 2000),
     );
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
-    final Animation<double> curve = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
+
+    _logoScaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _logoController, curve: Curves.elasticOut),
     );
-    // Define the tween
-    _animation = Tween<double>(begin: 1.0, end: 1.5).animate(curve);
-    _controller.repeat(reverse: true);
+
+    _logoRotationAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _logoController, curve: Curves.easeInOut),
+    );
+
+    _logoFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _logoController,
+        curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
+      ),
+    );
+
+    // Particle animations
+    _particleController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    );
+
+    _particleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _particleController, curve: Curves.linear),
+    );
+
+    // Sparkle animations
+    _sparkleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    _sparkleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _sparkleController, curve: Curves.easeInOut),
+    );
+
+    // Fade out animation
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+    );
+
+    // Start animations
+    _logoController.forward();
+    _particleController.repeat();
+    _sparkleController.repeat(reverse: true);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await checkFirstTime();
@@ -63,7 +121,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _logoController.dispose();
+    _particleController.dispose();
+    _sparkleController.dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
@@ -77,33 +138,35 @@ class _SplashScreenState extends State<SplashScreen>
         }
       },
       child: Scaffold(
-        backgroundColor: ColorsManager.bgColor,
-        body: InkWell(
-          onTap: () {
-            goTo(false);
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: AnimatedBuilder(
-                  animation: _animation,
-                  builder: (BuildContext context, Widget? child) {
-                    return Transform.scale(
-                      scale: _animation.value,
-                      child: Container(
-                        width: 50.w,
-                        height: 30.h,
-                        padding: const EdgeInsets.all(10),
-                        child: Center(child: Image.asset(Assets.logo)),
-                      ),
-                    );
-                  },
+        body: AnimatedBuilder(
+          animation: _fadeAnimation,
+          builder: (context, child) {
+            return Opacity(
+              opacity: _fadeAnimation.value,
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      ColorsManager.primaryColor,
+                      ColorsManager.lightPrimaryColor,
+                      ColorsManager.lighterPrimaryColor,
+                    ],
+                    stops: [0.0, 0.6, 1.0],
+                  ),
+                ),
+                child: EnhancedSplashContent(
+                  logoScaleAnimation: _logoScaleAnimation,
+                  logoRotationAnimation: _logoRotationAnimation,
+                  logoFadeAnimation: _logoFadeAnimation,
+                  particleAnimation: _particleAnimation,
+                  sparkleAnimation: _sparkleAnimation,
+                  useLottieAnimation: widget.useLottieAnimation,
                 ),
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
