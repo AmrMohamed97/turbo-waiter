@@ -130,6 +130,9 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    print(
+      "screen width: ${MediaQuery.of(context).size.width} , screen height: ${MediaQuery.of(context).size.height} ",
+    );
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {

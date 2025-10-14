@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDialog extends StatelessWidget {
   final String title;
@@ -10,25 +10,17 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       contentPadding: EdgeInsets.only(left: 5.w, right: 5.w, bottom: 10.h),
       title: Center(
         child: Text(
           title,
-          style: const TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
       ),
       content: SizedBox(
         width: double.maxFinite,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: children,
-        ),
+        child: Column(mainAxisSize: MainAxisSize.min, children: children),
       ),
     );
   }

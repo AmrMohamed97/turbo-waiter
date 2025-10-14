@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/core/theming/styles.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GlobalCustomScaffold extends StatelessWidget {
   final String? title;

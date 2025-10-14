@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/widgets/custom_network_image.dart';
 
 class MainCardFrame extends StatelessWidget {

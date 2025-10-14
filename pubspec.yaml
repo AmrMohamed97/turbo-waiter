@@ -25,12 +25,14 @@ dependencies:
   http_parser: ^4.1.2
   intl: null
   json_annotation: null
+  # keyboard_avoider: ^1.0.0
   lottie: ^3.3.2
   # mobile_scanner: ^7.1.2
   pretty_dio_logger: ^1.4.0
-  responsive_sizer: ^3.3.1
+  # responsive_sizer: ^3.3.1
   retrofit: null
   skeletonizer: ^2.1.0+1
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   build_runner: null

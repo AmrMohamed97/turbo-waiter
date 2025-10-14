@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/helpers/app_initialization.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
 import 'package:turbo_waiter/core/routing/app_router.dart';
 import 'package:turbo_waiter/core/routing/routes.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,8 +19,9 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.landscapeRight,
     ]);
 
-    return ResponsiveSizer(
-      builder: (ctx, orientation, screenType) => MaterialApp(
+    return ScreenUtilInit(
+      designSize: const Size(1376.0, 1032.0),
+      builder: (ctx, child) => MaterialApp(
         navigatorObservers: [routeObserver],
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
 
 class ModernLoginButton extends StatelessWidget {
@@ -16,9 +16,17 @@ class ModernLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isTablet = screenWidth > 768;
+
+    // Responsive sizing
+    final buttonHeight = isTablet ? 8.h : 7.h;
+    final fontSize = isTablet ? 20.sp : 18.sp;
+    final loadingSize = isTablet ? 7.w : 6.w;
+
     return Container(
       width: double.infinity,
-      height: 7.h,
+      height: buttonHeight,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: const LinearGradient(
@@ -62,8 +70,8 @@ class ModernLoginButton extends StatelessWidget {
             child: Center(
               child: isLoading
                   ? SizedBox(
-                      width: 6.w,
-                      height: 6.w,
+                      width: loadingSize,
+                      height: loadingSize,
                       child: CircularProgressIndicator(
                         strokeWidth: 3,
                         valueColor: AlwaysStoppedAnimation<Color>(
@@ -74,7 +82,7 @@ class ModernLoginButton extends StatelessWidget {
                   : Text(
                       buttonText ?? AppTexts.login,
                       style: TextStyle(
-                        fontSize: 18.sp,
+                        fontSize: fontSize,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontFamily: 'tajawal',

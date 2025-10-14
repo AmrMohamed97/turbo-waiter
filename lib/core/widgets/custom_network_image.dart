@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/networking/api_urls.dart';
 import 'package:turbo_waiter/gen/assets.gen.dart';
 // import 'package:turbo_waiter/core/theming/colors.dart';

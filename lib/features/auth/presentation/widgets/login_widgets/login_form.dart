@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/helpers/app_dialogs.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';

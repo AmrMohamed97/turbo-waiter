@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/core/theming/font_weight_helper.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextStyles {
   //white text

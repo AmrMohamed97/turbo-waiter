@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/helpers/widget_extensions.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/core/theming/styles.dart';

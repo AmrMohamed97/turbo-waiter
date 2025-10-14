@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ModernInputField extends StatelessWidget {
   final TextEditingController controller;
@@ -27,6 +27,21 @@ class ModernInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isTablet = screenWidth > 768;
+
+    // Responsive font sizes
+    final labelSize = isTablet ? 16.sp : 15.sp;
+    final inputSize = isTablet ? 18.sp : 16.sp;
+    final hintSize = isTablet ? 17.sp : 15.sp;
+    final iconSize = isTablet ? 22.sp : 20.sp;
+
+    // Responsive padding
+    final horizontalPadding = isTablet ? 5.w : 4.w;
+    final verticalPadding = isTablet ? 4.h : 3.h;
+    final iconPadding = isTablet ? 3.w : 2.w;
+    final iconMargin = isTablet ? 5.w : 4.w;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,7 +50,7 @@ class ModernInputField extends StatelessWidget {
           label,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 15.sp,
+            fontSize: labelSize,
             fontWeight: FontWeight.w600,
             fontFamily: 'tajawal',
             shadows: [
@@ -76,7 +91,7 @@ class ModernInputField extends StatelessWidget {
             validator: validator,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 16.sp,
+              fontSize: inputSize,
               fontFamily: 'tajawal',
               fontWeight: FontWeight.w500,
             ),
@@ -84,17 +99,17 @@ class ModernInputField extends StatelessWidget {
               hintText: hintText,
               hintStyle: TextStyle(
                 color: Colors.white.withOpacity(0.7),
-                fontSize: 15.sp,
+                fontSize: hintSize,
                 fontFamily: 'tajawal',
               ),
               prefixIcon: Container(
-                margin: EdgeInsets.all(4.w),
-                padding: EdgeInsets.all(2.w),
+                margin: EdgeInsets.all(iconMargin),
+                padding: EdgeInsets.all(iconPadding),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(prefixIcon, color: Colors.white, size: 20.sp),
+                child: Icon(prefixIcon, color: Colors.white, size: iconSize),
               ),
               suffixIcon: isPassword
                   ? ValueListenableBuilder<bool>(
@@ -110,7 +125,7 @@ class ModernInputField extends StatelessWidget {
                                 ? Icons.visibility_off
                                 : Icons.visibility,
                             color: Colors.white.withOpacity(0.7),
-                            size: 20.sp,
+                            size: iconSize,
                           ),
                         );
                       },
@@ -118,8 +133,8 @@ class ModernInputField extends StatelessWidget {
                   : null,
               border: InputBorder.none,
               contentPadding: EdgeInsets.symmetric(
-                horizontal: 4.w,
-                vertical: 3.h,
+                horizontal: horizontalPadding,
+                vertical: verticalPadding,
               ),
             ),
           ),

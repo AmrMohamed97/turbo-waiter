@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/core/theming/styles.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppTextField extends StatelessWidget {
   const CustomAppTextField({

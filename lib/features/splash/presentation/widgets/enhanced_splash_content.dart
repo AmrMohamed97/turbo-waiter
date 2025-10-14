@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/gen/assets.gen.dart';
 import 'package:lottie/lottie.dart';
@@ -30,6 +30,11 @@ class EnhancedSplashContent extends StatefulWidget {
 class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isTablet = screenWidth > 768;
+    final isLandscape = screenWidth > screenHeight;
+
     return Stack(
       children: [
         // Animated background particles
@@ -38,34 +43,60 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
         // Sparkle effects
         _buildSparkleEffects(),
 
-        // Main content - optimized for tablet landscape
+        // Main content - responsive layout
         Center(
-          child: Row(
+          child: isTablet && isLandscape
+              ? _buildTabletLandscapeLayout()
+              : _buildMobileLayout(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTabletLandscapeLayout() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Left side - Logo
+        Expanded(flex: 2, child: Center(child: _buildAnimatedLogo())),
+
+        // Right side - App name and loading
+        Expanded(
+          flex: 3,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Left side - Logo
-              Expanded(flex: 2, child: Center(child: _buildAnimatedLogo())),
+              // App name with fade animation
+              _buildAppName(),
 
-              // Right side - App name and loading
-              Expanded(
-                flex: 3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // App name with fade animation
-                    _buildAppName(),
+              SizedBox(height: 4.h),
 
-                    SizedBox(height: 4.h),
-
-                    // Loading indicator
-                    _buildLoadingIndicator(),
-                  ],
-                ),
-              ),
+              // Loading indicator
+              _buildLoadingIndicator(),
             ],
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildMobileLayout() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Logo
+        _buildAnimatedLogo(),
+
+        SizedBox(height: 6.h),
+
+        // App name with fade animation
+        _buildAppName(),
+
+        SizedBox(height: 4.h),
+
+        // Loading indicator
+        _buildLoadingIndicator(),
       ],
     );
   }
@@ -95,6 +126,16 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
   }
 
   Widget _buildAnimatedLogo() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isTablet = screenWidth > 768;
+    final isLandscape = screenWidth > screenHeight;
+
+    // Responsive logo size
+    final logoSize = isTablet
+        ? (isLandscape ? 0.15 * screenWidth : 0.25 * screenHeight)
+        : (screenWidth * 0.4).clamp(120.0, 200.0);
+
     return AnimatedBuilder(
       animation: widget.logoScaleAnimation,
       builder: (context, child) {
@@ -105,8 +146,8 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
             child: Opacity(
               opacity: widget.logoFadeAnimation.value,
               child: Container(
-                width: 20.w,
-                height: 20.w,
+                width: logoSize,
+                height: logoSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   boxShadow: [
@@ -124,7 +165,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
                 ),
                 child: ClipOval(
                   child: Container(
-                    padding: EdgeInsets.all(2.w),
+                    padding: EdgeInsets.all(logoSize * 0.1),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(
@@ -157,6 +198,24 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
   }
 
   Widget _buildAppName() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isTablet = screenWidth > 768;
+    final isLandscape = screenWidth > screenHeight;
+
+    // Responsive font sizes
+    final titleSize = isTablet
+        ? (isLandscape ? 0.04 * screenWidth : 0.05 * screenHeight)
+        : (screenWidth * 0.08).clamp(24.0, 36.0);
+
+    final subtitleSize = isTablet
+        ? (isLandscape ? 0.02 * screenWidth : 0.025 * screenHeight)
+        : (screenWidth * 0.04).clamp(14.0, 18.0);
+
+    final taglineSize = isTablet
+        ? (isLandscape ? 0.015 * screenWidth : 0.02 * screenHeight)
+        : (screenWidth * 0.035).clamp(12.0, 14.0);
+
     return AnimatedBuilder(
       animation: widget.logoFadeAnimation,
       builder: (context, child) {
@@ -167,7 +226,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
               Text(
                 'Turbo Waiter',
                 style: TextStyle(
-                  fontSize: 36.sp,
+                  fontSize: titleSize,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   fontFamily: 'tajawal',
@@ -185,7 +244,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
               Text(
                 'Fast • Smart • Reliable',
                 style: TextStyle(
-                  fontSize: 18.sp,
+                  fontSize: subtitleSize,
                   color: Colors.white.withOpacity(0.9),
                   fontFamily: 'tajawal',
                   letterSpacing: 2,
@@ -196,7 +255,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
               Text(
                 'Tablet-Optimized Restaurant Experience',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: taglineSize,
                   color: Colors.white.withOpacity(0.7),
                   fontFamily: 'tajawal',
                   letterSpacing: 1,
@@ -211,16 +270,28 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
   }
 
   Widget _buildLoadingIndicator() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isTablet = screenWidth > 768;
+    final isLandscape = screenWidth > screenHeight;
+
+    // Responsive loading indicator size
+    final indicatorWidth = isTablet
+        ? (isLandscape ? 0.3 * screenWidth : 0.4 * screenWidth)
+        : (screenWidth * 0.6).clamp(200.0, 300.0);
+
+    final indicatorHeight = isTablet ? 8.0 : 6.0;
+
     return AnimatedBuilder(
       animation: widget.logoFadeAnimation,
       builder: (context, child) {
         return Opacity(
           opacity: widget.logoFadeAnimation.value,
           child: Container(
-            width: 40.w,
-            height: 6,
+            width: indicatorWidth,
+            height: indicatorHeight,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadius.circular(indicatorHeight / 2),
               color: Colors.white.withOpacity(0.3),
             ),
             child: AnimatedBuilder(

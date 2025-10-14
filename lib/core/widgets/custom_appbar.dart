@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key, required this.title, this.isFromHome = true});

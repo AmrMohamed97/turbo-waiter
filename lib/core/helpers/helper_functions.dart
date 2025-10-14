@@ -3,7 +3,7 @@ import 'package:turbo_waiter/core/helpers/app_texts.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/core/widgets/app_text_button.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void showLoadingDialog(BuildContext context) {
   showDialog(
