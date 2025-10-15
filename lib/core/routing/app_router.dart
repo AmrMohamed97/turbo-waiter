@@ -5,6 +5,7 @@ import 'package:turbo_waiter/core/routing/routes.dart';
 import 'package:turbo_waiter/core/widgets/coming_soon_screen.dart';
 import 'package:turbo_waiter/features/auth/presentation/logic/cubit/auth_cubit.dart';
 import 'package:turbo_waiter/features/auth/presentation/screens/login_screen.dart';
+import 'package:turbo_waiter/features/home/presentation/pages/home_screen.dart';
 import 'package:turbo_waiter/features/splash/presentation/logic/splash_cubit.dart';
 import 'package:turbo_waiter/features/splash/presentation/screens/splash_screen.dart';
 
@@ -33,13 +34,8 @@ class AppRouter {
           ),
         );
 
-      // case Routes.homeScreen:
-      //   return MaterialPageRoute(
-      //     builder: (_) => BlocProvider(
-      //       create: (context) => getIt<TicketStatusCubit>(),
-      //       child: HomeScreen(),
-      //     ),
-      //   );
+      case Routes.homeScreen:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
       // case Routes.qrCodeScannerScreen:
       //   Map<String, dynamic>? params =
       //       settings.arguments as Map<String, dynamic>?;

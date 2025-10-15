@@ -89,6 +89,12 @@ class TextStyles {
     color: Colors.white,
     fontFamily: 'tajawal',
   );
+  static TextStyle font15WhiteMedium = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeightHelper.medium,
+    color: Colors.white,
+    fontFamily: 'tajawal',
+  );
 
   static TextStyle font20WhiteMedium = TextStyle(
     fontSize: 20.sp,
