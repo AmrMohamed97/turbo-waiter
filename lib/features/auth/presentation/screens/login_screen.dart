@@ -87,46 +87,33 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 4.h),
               // Modern header with logo
               const ModernLoginHeader(),
-              SizedBox(height: 2.h),
+              SizedBox(height: 20.h),
               // Additional branding for tablet
-              Container(
-                padding: EdgeInsets.all(3.w),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.2),
-                    width: 1,
+              Column(
+                children: [
+                  Text(
+                    'مرحبا بك في توربو ',
+                    style: TextStyles.boldTextStyle.copyWith(
+                      fontSize: 32.sp,
+
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Welcome to Turbo Waiter',
-                      style: TextStyle(
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontFamily: 'tajawal',
-                      ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    "تطبيق للطلبات الإلكترونية",
+                    style: TextStyles.mediumTextStyle.copyWith(
+                      fontSize: 16.sp,
+                      color: Colors.white,
                     ),
-                    SizedBox(height: 1.h),
-                    Text(
-                      'Optimized for tablet experience',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.white.withOpacity(0.8),
-                        fontFamily: 'tajawal',
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
 
-        SizedBox(width: 4.w),
+        SizedBox(width: 20.w),
 
         // Right side - Login form
         Expanded(flex: 3, child: _buildLoginForm(context)),
@@ -170,17 +157,17 @@ class LoginScreen extends StatelessWidget {
                 ? (isLandscape ? 0.4 * screenWidth : 0.6 * screenWidth)
                 : 0.9 * screenWidth,
           ),
-          padding: EdgeInsets.all(isTablet ? 5.w : 4.w),
+          padding: EdgeInsets.all(16.w),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               width: 1.5,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -220,7 +207,7 @@ class LoginScreen extends StatelessWidget {
                     required: true,
                   ),
 
-                  SizedBox(height: isTablet ? 4.h : 3.h),
+                  SizedBox(height: 20.h),
 
                   // Password field
                   ModernInputField(
@@ -237,26 +224,26 @@ class LoginScreen extends StatelessWidget {
                     required: true,
                   ),
 
-                  SizedBox(height: isTablet ? 5.h : 4.h),
+                  SizedBox(height: 40.h),
 
                   // Login button
                   ModernLoginButton(
                     onPressed: () async {
-                      await context
-                          .read<AuthCubit>()
-                          .checkLoginFormValidation();
+                      // await context
+                      //     .read<AuthCubit>()
+                      //     .checkLoginFormValidation();
+                      context.pushReplacementNamed(Routes.homeScreen);
                     },
                   ),
 
                   SizedBox(height: isTablet ? 4.h : 3.h),
 
                   // Social login
-                  const ModernSocialLogin(),
-
-                  SizedBox(height: isTablet ? 3.h : 2.h),
+                  // const ModernSocialLogin(),
+                  SizedBox(height: 20.h),
 
                   // Footer with links
-                  const ModernLoginFooter(),
+                  // const ModernLoginFooter(),
                 ],
               ),
             ),

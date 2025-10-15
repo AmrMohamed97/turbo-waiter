@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData light = ThemeData(
-  fontFamily: 'Zain',
+  fontFamily: 'tajawal',
   scaffoldBackgroundColor: const Color(0xFFF4F4F4),
   primaryColor: const Color(0xFF5F2DEE),
   highlightColor: const Color(0xFFB13BFF),

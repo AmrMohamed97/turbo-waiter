@@ -34,12 +34,12 @@ class ModernLoginHeader extends StatelessWidget {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.white.withOpacity(0.3),
+                  color: Colors.white.withValues(alpha: 0.3),
                   blurRadius: 20,
                   spreadRadius: 5,
                 ),
                 BoxShadow(
-                  color: ColorsManager.secondaryColor.withOpacity(0.4),
+                  color: ColorsManager.secondaryColor.withValues(alpha: 0.4),
                   blurRadius: 30,
                   spreadRadius: 10,
                 ),
@@ -54,8 +54,8 @@ class ModernLoginHeader extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Colors.white.withOpacity(0.9),
-                      Colors.white.withOpacity(0.7),
+                      Colors.white.withValues(alpha: 0.9),
+                      Colors.white.withValues(alpha: 0.7),
                     ],
                   ),
                 ),

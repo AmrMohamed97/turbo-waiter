@@ -4,6 +4,36 @@ import 'package:turbo_waiter/core/theming/font_weight_helper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextStyles {
+  static TextStyle regularTextStyle = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.regular,
+    color: Colors.white,
+    fontFamily: 'tajawal',
+  );
+  static TextStyle mediumTextStyle = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.medium,
+    color: Colors.white,
+    fontFamily: 'tajawal',
+  );
+  static TextStyle boldTextStyle = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.bold,
+    color: Colors.white,
+    fontFamily: 'tajawal',
+  );
+  static TextStyle extraBoldTextStyle = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.extraBold,
+    color: Colors.white,
+    fontFamily: 'tajawal',
+  );
+  static TextStyle extraBolderTextStyle = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.extraBolder,
+    color: Colors.white,
+    fontFamily: 'tajawal',
+  );
   //white text
   static TextStyle font14WhiteBold = TextStyle(
     fontSize: 14.sp,

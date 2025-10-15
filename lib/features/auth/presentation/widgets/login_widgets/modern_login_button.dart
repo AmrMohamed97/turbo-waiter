@@ -20,9 +20,9 @@ class ModernLoginButton extends StatelessWidget {
     final isTablet = screenWidth > 768;
 
     // Responsive sizing
-    final buttonHeight = isTablet ? 8.h : 7.h;
+    final buttonHeight = isTablet ? 50.h : 40.h;
     final fontSize = isTablet ? 20.sp : 18.sp;
-    final loadingSize = isTablet ? 7.w : 6.w;
+    final loadingSize = isTablet ? 70.w : 60.w;
 
     return Container(
       width: double.infinity,
@@ -39,12 +39,12 @@ class ModernLoginButton extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFFFF8C00).withOpacity(0.4),
+            color: const Color(0xFFFF8C00).withValues(alpha: 0.4),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
           BoxShadow(
-            color: const Color(0xFFDC143C).withOpacity(0.3),
+            color: const Color(0xFFDC143C).withValues(alpha: 0.3),
             blurRadius: 15,
             offset: const Offset(0, 4),
           ),
@@ -62,8 +62,8 @@ class ModernLoginButton extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  const Color(0xFFFF8C00).withOpacity(0.9),
-                  const Color(0xFFDC143C).withOpacity(0.9),
+                  const Color(0xFFFF8C00).withValues(alpha: 0.9),
+                  const Color(0xFFDC143C).withValues(alpha: 0.9),
                 ],
               ),
             ),
@@ -75,7 +75,7 @@ class ModernLoginButton extends StatelessWidget {
                       child: CircularProgressIndicator(
                         strokeWidth: 3,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.white.withOpacity(0.9),
+                          Colors.white.withValues(alpha: 0.9),
                         ),
                       ),
                     )
@@ -89,7 +89,7 @@ class ModernLoginButton extends StatelessWidget {
                         letterSpacing: 1.2,
                         shadows: [
                           Shadow(
-                            color: Colors.black.withOpacity(0.3),
+                            color: Colors.black.withValues(alpha: 0.3),
                             blurRadius: 8,
                             offset: const Offset(0, 2),
                           ),

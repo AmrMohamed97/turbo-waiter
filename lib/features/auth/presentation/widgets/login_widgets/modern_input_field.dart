@@ -63,20 +63,20 @@ class ModernInputField extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 1.h),
+        SizedBox(height: 10.h),
 
         // Input field with glassmorphism effect
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: Colors.white.withOpacity(0.15),
+            color: Colors.white.withValues(alpha: 0.15),
             border: Border.all(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withValues(alpha: 0.3),
               width: 1.5,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 15,
                 offset: const Offset(0, 5),
               ),
@@ -98,7 +98,7 @@ class ModernInputField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
-                color: Colors.white.withOpacity(0.7),
+                color: Colors.white.withValues(alpha: 0.7),
                 fontSize: hintSize,
                 fontFamily: 'tajawal',
               ),
@@ -106,7 +106,7 @@ class ModernInputField extends StatelessWidget {
                 margin: EdgeInsets.all(iconMargin),
                 padding: EdgeInsets.all(iconPadding),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(prefixIcon, color: Colors.white, size: iconSize),
@@ -124,7 +124,7 @@ class ModernInputField extends StatelessWidget {
                             isObscured
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: Colors.white.withOpacity(0.7),
+                            color: Colors.white.withValues(alpha: 0.7),
                             size: iconSize,
                           ),
                         );

@@ -32,79 +32,91 @@ class AppDialogs {
       builder: (context) {
         return Scaffold(
           backgroundColor: Colors.transparent,
-          body: Center(
-            child: Container(
-              width: width ?? 85.w,
-              height: height ?? 30.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(radius ?? 3.w),
-                color: Colors.white,
-              ),
-              child: Column(
-                spacing: 3.h,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    message,
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-
-                    style: TextStyles.font15BlackMedium.copyWith(
-                      fontSize: 17.sp,
-
-                      // color: ColorsManager.primaryColor,
-                      fontWeight: FontWeightHelper.bold,
-                    ),
+          body: Stack(
+            children: [
+              // Gradient background like login screen
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFFFF8C00), // Orange from app icon
+                      Color(0xFFDC143C), // Red from app icon
+                      Color(0xFFB22222), // Darker red for depth
+                    ],
+                    stops: [0.0, 0.6, 1.0],
                   ),
-                  Row(
-                    spacing: 5.w,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      AppTextButton(
-                        horizontalPadding: 00,
-                        verticalPadding: 0,
-                        borderRadius: 4,
-                        backgroundColor: Colors.red,
-                        buttonText: AppTexts.yes,
-                        onPressed: () {
-                          context.pop();
-                          yesActionBtn();
-                        },
-                      ).expand(),
-                      AppTextButton(
-                        horizontalPadding: 00,
-                        verticalPadding: 0,
-                        borderRadius: 4,
-                        buttonText: AppTexts.no,
-                        backgroundColor: ColorsManager.gray1_7,
-                        onPressed: context.pop,
-                      ).expand(),
-                      // Expanded(
-                      //   child: ElevatedButton(
-                      //     style: ElevatedButton.styleFrom(
-                      //       backgroundColor: ColorsManager.primaryColor,
-                      //       padding: EdgeInsets.all(1.w),
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(0.5.w),
-                      //       ),
-                      //     ),
-                      //     onPressed: () {
-                      //       context.pop();
-                      //     },
-                      //     child: Text(
-                      //       AppTexts.no,
-                      //       style: TextStyles.font15BlackMedium.copyWith(
-                      //         color: Colors.white,
-                      //         fontWeight: FontWeightHelper.bold,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                ),
+              ),
+              // Blurred backdrop
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: Container(color: Colors.black.withValues(alpha: 0.3)),
+              ),
+              Center(
+                child: Container(
+                  width: width ?? 85.w,
+                  height: height ?? 30.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(radius ?? 24),
+                    color: Colors.white.withValues(alpha: 0.1),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
                     ],
                   ),
-                ],
-              ).paddingSymmetric(horizontal: 6.w, vertical: 1.h),
-            ),
+                  child: Column(
+                    spacing: 3.h,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        message,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: TextStyles.font15BlackMedium.copyWith(
+                          fontSize: 17.sp,
+                          color: Colors.white,
+                          fontWeight: FontWeightHelper.bold,
+                        ),
+                      ),
+                      Row(
+                        spacing: 5.w,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          AppTextButton(
+                            horizontalPadding: 00,
+                            verticalPadding: 0,
+                            borderRadius: 4,
+                            backgroundColor: Colors.red,
+                            buttonText: AppTexts.yes,
+                            onPressed: () {
+                              context.pop();
+                              yesActionBtn();
+                            },
+                          ).expand(),
+                          AppTextButton(
+                            horizontalPadding: 00,
+                            verticalPadding: 0,
+                            borderRadius: 4,
+                            buttonText: AppTexts.no,
+                            backgroundColor: ColorsManager.gray1_7,
+                            onPressed: context.pop,
+                          ).expand(),
+                        ],
+                      ),
+                    ],
+                  ).paddingSymmetric(horizontal: 6.w, vertical: 1.h),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -127,35 +139,66 @@ class AppDialogs {
         backgroundColor: Colors.transparent,
         body: PopScope(
           canPop: canPop,
-          child: Center(
-            child: Container(
-              // padding: EdgeInsets.all(padding ?? 2.w),
-              width: width ?? 85.w,
-              height: height ?? 30.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(radius ?? 3.w),
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Column(
-                  spacing: 4.h,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CircularProgressIndicator(
-                      color: ColorsManager.primaryColor,
-                    ),
-                    // verticalSpace(2),
-                    Text(
-                      sentence,
-                      style: TextStyles.font16WhiteBold.copyWith(
-                        color: ColorsManager.primaryColor,
-                        fontSize: 18.sp,
-                      ),
-                    ),
-                  ],
+          child: Stack(
+            children: [
+              // Gradient background like login screen
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFFFF8C00), // Orange from app icon
+                      Color(0xFFDC143C), // Red from app icon
+                      Color(0xFFB22222), // Darker red for depth
+                    ],
+                    stops: [0.0, 0.6, 1.0],
+                  ),
                 ),
               ),
-            ),
+              // Blurred backdrop
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: Container(color: Colors.black.withValues(alpha: 0.3)),
+              ),
+              Center(
+                child: Container(
+                  width: width ?? 85.w,
+                  height: height ?? 30.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(radius ?? 24),
+                    color: Colors.white.withValues(alpha: 0.1),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Column(
+                      spacing: 4.h,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(color: Colors.white),
+                        Text(
+                          sentence,
+                          style: TextStyles.font16WhiteBold.copyWith(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -259,57 +302,100 @@ class AppDialogs {
       builder: (context) => PopScope(
         canPop: canPop,
         child: Scaffold(
-          body: Center(
-            child: Container(
-              padding: EdgeInsets.all(padding ?? 5.w),
-              width: width ?? 90.w,
-              height: height ?? 35.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.w),
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Column(
-                  spacing: 2.h,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    image ??
-                        const CircularProgressIndicator(
-                          color: ColorsManager.primaryColor,
-                        ),
-                    verticalSpace(2),
-                    Text(sentence, style: TextStyles.font17BlackExtraBolder),
-                    if (showActions)
-                      Row(
-                        spacing: 5.w,
-                        children: [
-                          Expanded(
-                            child: AppTextButton(
-                              horizontalPadding: 0,
-                              verticalPadding: 0.1,
-                              buttonText: confirmText ?? AppTexts.confirm,
-                              onPressed: onConfirm ?? () {},
-                            ),
-                          ),
-                          Expanded(
-                            child: AppTextButton(
-                              horizontalPadding: 0,
-                              verticalPadding: 0.1,
-                              backgroundColor: Colors.white,
-                              buttonBorder: WidgetStatePropertyAll(
-                                BorderSide(color: ColorsManager.primaryColor),
-                              ),
-                              textStyle: TextStyles.font17PrimaryBold,
-                              buttonText: cancelText ?? AppTexts.cancel,
-                              onPressed: onClose ?? () {},
-                            ),
-                          ),
-                        ],
-                      ),
-                  ],
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: [
+              // Gradient background like login screen
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFFFF8C00), // Orange from app icon
+                      Color(0xFFDC143C), // Red from app icon
+                      Color(0xFFB22222), // Darker red for depth
+                    ],
+                    stops: [0.0, 0.6, 1.0],
+                  ),
                 ),
               ),
-            ),
+              // Blurred backdrop
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: Container(color: Colors.black.withValues(alpha: 0.3)),
+              ),
+              Center(
+                child: Container(
+                  padding: EdgeInsets.all(padding ?? 5.w),
+                  width: width ?? 90.w,
+                  height: height ?? 35.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: Colors.white.withValues(alpha: 0.1),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Column(
+                      spacing: 2.h,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        image ??
+                            const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                        verticalSpace(2),
+                        Text(
+                          sentence,
+                          style: TextStyles.font17BlackExtraBolder.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                        if (showActions)
+                          Row(
+                            spacing: 5.w,
+                            children: [
+                              Expanded(
+                                child: AppTextButton(
+                                  horizontalPadding: 0,
+                                  verticalPadding: 0.1,
+                                  buttonText: confirmText ?? AppTexts.confirm,
+                                  onPressed: onConfirm ?? () {},
+                                ),
+                              ),
+                              Expanded(
+                                child: AppTextButton(
+                                  horizontalPadding: 0,
+                                  verticalPadding: 0.1,
+                                  backgroundColor: Colors.white,
+                                  buttonBorder: WidgetStatePropertyAll(
+                                    BorderSide(
+                                      color: ColorsManager.primaryColor,
+                                    ),
+                                  ),
+                                  textStyle: TextStyles.font17PrimaryBold,
+                                  buttonText: cancelText ?? AppTexts.cancel,
+                                  onPressed: onClose ?? () {},
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -333,53 +419,99 @@ class AppDialogs {
           ) {
             return Scaffold(
               backgroundColor: Colors.transparent,
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              body: Stack(
                 children: [
-                  Align(
-                    child: Container(
-                      padding: EdgeInsets.all(2.w),
-                      width: 90.w,
-                      height: 60.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5.w)),
-                      ),
-                      child: Column(
-                        spacing: 1.h,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(child: SvgPicture.asset(Assets.svg.error)),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 3.w),
-                            child: Column(
-                              spacing: 1.h,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  message,
-                                  textAlign: TextAlign.start,
-                                  style: TextStyles.font16BlackBold,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: AppTextButton(
-                              horizontalPadding: 0,
-                              verticalPadding: 0.1,
-                              buttonText: AppTexts.cancel,
-                              onPressed: () {
-                                context.pop();
-                                onCancel?.call();
-                              },
-                            ),
-                          ),
+                  // Gradient background like login screen
+                  Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xFFFF8C00), // Orange from app icon
+                          Color(0xFFDC143C), // Red from app icon
+                          Color(0xFFB22222), // Darker red for depth
                         ],
+                        stops: [0.0, 0.6, 1.0],
                       ),
                     ),
+                  ),
+                  // Blurred backdrop
+                  BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: Container(
+                      color: Colors.black.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        child: Container(
+                          padding: EdgeInsets.all(2.w),
+                          width: 90.w,
+                          height: 60.h,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                            border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.2),
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.1),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            spacing: 1.h,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: SvgPicture.asset(
+                                  Assets.svg.error,
+                                  colorFilter: const ColorFilter.mode(
+                                    Colors.white,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 3.w),
+                                child: Column(
+                                  spacing: 1.h,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      message,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyles.font16BlackBold
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: AppTextButton(
+                                  horizontalPadding: 0,
+                                  verticalPadding: 0.1,
+                                  buttonText: AppTexts.cancel,
+                                  onPressed: () {
+                                    context.pop();
+                                    onCancel?.call();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -396,41 +528,55 @@ class AppDialogs {
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
-
       barrierLabel: '',
       pageBuilder: (_, _, _) {
         return Scaffold(
           backgroundColor: Colors.transparent,
           body: Stack(
             children: [
-              // 🔹 Blurred background
+              // Gradient background like login screen
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFFFF8C00), // Orange from app icon
+                      Color(0xFFDC143C), // Red from app icon
+                      Color(0xFFB22222), // Darker red for depth
+                    ],
+                    stops: [0.0, 0.6, 1.0],
+                  ),
+                ),
+              ),
+              // Blurred background
               GestureDetector(
                 onTap: () => context.pop(),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: Container(
-                    color: Color.fromARGB(97, 215, 215, 218),
-                  ), //#1717253D #BDBEC3
+                  child: Container(color: Colors.black.withValues(alpha: 0.3)),
                 ),
               ),
 
-              // 🔹 Popup at the top
+              // Popup at the top
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
                   width: 100.w,
                   height: height ?? 30.h,
-
                   decoration: BoxDecoration(
-                    color: Colors.white,
-
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.black26,
-                    //     blurRadius: 10,
-                    //     offset: Offset(0, 4),
-                    //   ),
-                    // ],
+                    color: Colors.white.withValues(alpha: 0.1),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
                   ),
                   child: child,
                 ),
