@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:turbo_waiter/features/home/presentation/pages/home_screen.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
 import '../../../../gen/assets.gen.dart';
+// import '../../home/screens/home_screen.dart'; // شاشة الطلب الرئيسية
 
 class TablesPage extends StatelessWidget {
   const TablesPage({super.key});
@@ -13,7 +15,7 @@ class TablesPage extends StatelessWidget {
       12,
       (index) => TableModel(
         id: index + 1,
-        isReserved: index % 3 == 0, // افتراضياً: كل ثالث طاولة محجوزة
+        isReserved: index % 3 == 0, // كل ثالث طاولة محجوزة
       ),
     );
 
@@ -23,11 +25,7 @@ class TablesPage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFFF8C00), // برتقالي من شعار التطبيق
-              Color(0xFFDC143C), // أحمر متوسط
-              Color(0xFFB22222), // أحمر غامق للعمق
-            ],
+            colors: [Color(0xFFFF8C00), Color(0xFFDC143C), Color(0xFFB22222)],
             stops: [0.0, 0.6, 1.0],
           ),
         ),
@@ -42,7 +40,7 @@ class TablesPage extends StatelessWidget {
                 Expanded(
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4, // مناسب لتابلت (4 طاولات في الصف)
+                      crossAxisCount: 4,
                       crossAxisSpacing: 16.w,
                       mainAxisSpacing: 16.h,
                       childAspectRatio: 1,
@@ -62,7 +60,6 @@ class TablesPage extends StatelessWidget {
     );
   }
 
-  // 🔹 رأس الصفحة (العنوان + الشعار)
   Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
@@ -86,7 +83,6 @@ class TablesPage extends StatelessWidget {
     );
   }
 
-  // 🔹 كارت الطاولة
   Widget _buildTableCard(BuildContext context, TableModel table) {
     final isReserved = table.isReserved;
 
@@ -100,8 +96,7 @@ class TablesPage extends StatelessWidget {
             ),
           );
         } else {
-          // هنا يمكنك مثلاً الانتقال إلى صفحة الطلب الخاصة بهذه الطاولة
-          // Navigator.push(context, MaterialPageRoute(builder: (_) => const OrderPanelWidget()));
+          _navigateToOrderScreen(context, table.id);
         }
       },
       child: Container(
@@ -119,7 +114,6 @@ class TablesPage extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            // خلفية شفافة مضيئة أكثر للطاولة المحجوزة
             if (isReserved)
               Container(
                 decoration: BoxDecoration(
@@ -162,6 +156,32 @@ class TablesPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  /// 🔹 انتقال متحرك إلى صفحة الطلب
+  void _navigateToOrderScreen(BuildContext context, int tableId) {
+    Navigator.of(context).push(_createSlideRoute(const HomeScreen()));
+  }
+
+  /// 🔹 تعريف حركة الانزلاق (Slide Transition)
+  Route _createSlideRoute(Widget page) {
+    return PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0); // من اليمين إلى اليسار
+        const end = Offset.zero;
+        final tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: Curves.easeInOut));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: FadeTransition(opacity: animation, child: child),
+        );
+      },
     );
   }
 }
