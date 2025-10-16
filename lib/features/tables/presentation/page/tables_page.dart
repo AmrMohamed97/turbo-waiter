@@ -1,10 +1,10 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/features/home/presentation/pages/home_screen.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
 import '../../../../gen/assets.gen.dart';
-// import '../../home/screens/home_screen.dart'; // شاشة الطلب الرئيسية
 
 class TablesPage extends StatelessWidget {
   const TablesPage({super.key});
@@ -13,10 +13,7 @@ class TablesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final tables = List.generate(
       12,
-      (index) => TableModel(
-        id: index + 1,
-        isReserved: index % 3 == 0, // كل ثالث طاولة محجوزة
-      ),
+      (index) => TableModel(id: index + 1, isReserved: index % 3 == 0),
     );
 
     return Scaffold(
@@ -159,27 +156,40 @@ class TablesPage extends StatelessWidget {
     );
   }
 
-  /// 🔹 انتقال متحرك إلى صفحة الطلب
+  /// 🔹 انتقال متحرك مع تأثير الضباب والشفافية
   void _navigateToOrderScreen(BuildContext context, int tableId) {
-    Navigator.of(context).push(_createSlideRoute(const HomeScreen()));
+    Navigator.of(context).push(_createBlurredSlideRoute(const HomeScreen()));
   }
 
-  /// 🔹 تعريف حركة الانزلاق (Slide Transition)
-  Route _createSlideRoute(Widget page) {
+  /// 🔹 حركة انزلاق + تأثير ضبابي زجاجي
+  Route _createBlurredSlideRoute(Widget page) {
     return PageRouteBuilder(
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 650),
       pageBuilder: (context, animation, secondaryAnimation) => page,
+      opaque: false, // للسماح بالشفافية
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0); // من اليمين إلى اليسار
-        const end = Offset.zero;
-        final tween = Tween(
-          begin: begin,
-          end: end,
+        final blurTween = Tween<double>(begin: 0.0, end: 8.0);
+        final slideTween = Tween<Offset>(
+          begin: const Offset(1.0, 0.0),
+          end: Offset.zero,
         ).chain(CurveTween(curve: Curves.easeInOut));
 
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: FadeTransition(opacity: animation, child: child),
+        return Stack(
+          children: [
+            // الخلفية الضبابية
+            BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: blurTween.evaluate(animation),
+                sigmaY: blurTween.evaluate(animation),
+              ),
+              child: Container(color: Colors.black.withOpacity(0.2)),
+            ),
+            // صفحة الطلب
+            SlideTransition(
+              position: animation.drive(slideTween),
+              child: FadeTransition(opacity: animation, child: child),
+            ),
+          ],
         );
       },
     );
