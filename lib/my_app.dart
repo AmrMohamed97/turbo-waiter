@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // initialRoute: Routes.testScreen,
-        initialRoute: Routes.splashScreen,
+        initialRoute: Routes.tablesPage,
         onGenerateRoute: AppRouter.generateRoute,
       ),
     );
