@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
 
-class ModernLoginButton extends StatelessWidget {
+class PrimaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isLoading;
   final String? buttonText;
 
-  const ModernLoginButton({
+  const PrimaryButton({
     super.key,
     this.onPressed,
     this.isLoading = false,

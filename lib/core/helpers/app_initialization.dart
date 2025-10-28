@@ -48,7 +48,7 @@ Future<void> appInitialization() async {
       path: 'assets/lang',
       startLocale: startLocal,
       useOnlyLangCode: true,
-      child: DevicePreview(enabled: false, builder: (context) => MyApp()),
+      child: DevicePreview(enabled: true, builder: (context) => MyApp()),
       // child: BlocProvider(
       //   create: (context) => getIt<ThemeCubit>(),
       //   child: MyApp(

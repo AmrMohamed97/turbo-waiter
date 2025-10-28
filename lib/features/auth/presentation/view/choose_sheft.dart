@@ -3,7 +3,7 @@ import 'package:turbo_waiter/core/helpers/extensions.dart';
 import 'package:turbo_waiter/core/routing/routes.dart';
 import 'package:turbo_waiter/core/widgets/custom_dialog.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
-import 'package:turbo_waiter/features/auth/presentation/widgets/login_widgets/modern_login_button.dart';
+import 'package:turbo_waiter/core/widgets/primary_button.dart';
 
 class ChooseCShift extends StatefulWidget {
   final Function(String)? onShiftSelected;
@@ -60,7 +60,7 @@ class _ChooseCShiftState extends State<ChooseCShift>
         const SizedBox(height: 20),
         ...shifts.map((shift) => _buildShiftItem(shift)),
         const SizedBox(height: 20),
-        ModernLoginButton(
+        PrimaryButton(
           onPressed: () {
             context.pushReplacementNamed(Routes.tablesPage);
           },

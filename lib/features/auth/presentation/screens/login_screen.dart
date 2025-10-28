@@ -9,14 +9,12 @@ import 'package:turbo_waiter/core/helpers/app_texts.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';
 import 'package:turbo_waiter/core/routing/routes.dart';
 import 'package:turbo_waiter/core/theming/styles.dart';
-import 'package:turbo_waiter/core/widgets/custom_dialog.dart';
+import 'package:turbo_waiter/core/widgets/app_text_form_field.dart';
+import 'package:turbo_waiter/core/widgets/screen_wrapper.dart';
 import 'package:turbo_waiter/features/auth/presentation/logic/cubit/auth_cubit.dart';
 import 'package:turbo_waiter/features/auth/presentation/view/choose_sheft.dart';
-import 'package:turbo_waiter/features/auth/presentation/widgets/login_widgets/modern_input_field.dart';
-import 'package:turbo_waiter/features/auth/presentation/widgets/login_widgets/modern_login_button.dart';
-import 'package:turbo_waiter/features/auth/presentation/widgets/login_widgets/modern_login_footer.dart';
+import 'package:turbo_waiter/core/widgets/primary_button.dart';
 import 'package:turbo_waiter/features/auth/presentation/widgets/login_widgets/modern_login_header.dart';
-import 'package:turbo_waiter/features/auth/presentation/widgets/login_widgets/modern_social_login.dart';
 
 class LoginScreen extends StatelessWidget {
   final bool canReturn;
@@ -41,33 +39,17 @@ class LoginScreen extends StatelessWidget {
           SystemNavigator.pop();
         }
       },
-      child: Scaffold(
+      child: ScreenWrapper(
         resizeToAvoidBottomInset: true,
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xFFFF8C00), // Orange from app icon
-                Color(0xFFDC143C), // Red from app icon
-                Color(0xFFB22222), // Darker red for depth
-              ],
-              stops: [0.0, 0.6, 1.0],
-            ),
-          ),
-          child: SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isTablet ? 6.w : 8.w,
-                    vertical: isTablet ? 2.h : 4.h,
-                  ),
-                  child: isTablet && isLandscape
-                      ? _buildTabletLandscapeLayout(context)
-                      : _buildMobileLayout(context),
+        body: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 6.w : 8.w,
+                  vertical: isTablet ? 2.h : 4.h,
                 ),
+                child: _buildTabletLandscapeLayout(context),
               ),
             ),
           ),
@@ -119,20 +101,6 @@ class LoginScreen extends StatelessWidget {
 
         // Right side - Login form
         Expanded(flex: 3, child: _buildLoginForm(context)),
-      ],
-    );
-  }
-
-  Widget _buildMobileLayout(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(height: 4.h),
-        // Modern header with logo
-        const ModernLoginHeader(),
-        SizedBox(height: 4.h),
-        // Login form
-        _buildLoginForm(context),
       ],
     );
   }
@@ -198,38 +166,84 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   // Username field
-                  ModernInputField(
+                  AppTextFormField(
                     controller: context
                         .read<AuthCubit>()
                         .userNameLoginController,
                     hintText: AppTexts.enterUserName,
                     label: AppTexts.nameOrEmail,
-                    prefixIcon: Icons.person_outline,
-                    keyboardType: TextInputType.emailAddress,
-                    required: true,
+                    prefixIcon: Icon(Icons.person_outline, color: Colors.white),
+                    keyboard: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppTexts.requiredField;
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      context.read<AuthCubit>().userNameLoginController.text =
+                          value;
+                    },
                   ),
 
                   SizedBox(height: 20.h),
 
                   // Password field
-                  ModernInputField(
-                    controller: context
-                        .read<AuthCubit>()
-                        .passwordLoginController,
-                    hintText: AppTexts.enterPassword,
-                    label: AppTexts.password,
-                    prefixIcon: Icons.lock_outline,
-                    isPassword: true,
-                    obscureTextNotifier: context
+                  ValueListenableBuilder(
+                    valueListenable: context
                         .read<AuthCubit>()
                         .loginObscurePasswordNotifier,
-                    required: true,
+                    builder: (context, value, child) {
+                      return AppTextFormField(
+                        controller: context
+                            .read<AuthCubit>()
+                            .passwordLoginController,
+                        hintText: AppTexts.enterPassword,
+                        label: AppTexts.password,
+                        prefixIcon: Icon(
+                          Icons.lock_outline,
+                          color: Colors.white,
+                        ),
+                        keyboard: TextInputType.visiblePassword,
+                        isObscureText: context
+                            .read<AuthCubit>()
+                            .loginObscurePasswordNotifier
+                            .value,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            context
+                                .read<AuthCubit>()
+                                .loginObscurePasswordNotifier
+                                .value = !context
+                                .read<AuthCubit>()
+                                .loginObscurePasswordNotifier
+                                .value;
+                          },
+                          icon: Icon(
+                            context
+                                    .read<AuthCubit>()
+                                    .loginObscurePasswordNotifier
+                                    .value
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
+                            color: Colors.white,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppTexts.requiredField;
+                          }
+                          return null;
+                        },
+                      );
+                    },
                   ),
+                  SizedBox(height: 20.h),
 
                   SizedBox(height: 40.h),
 
                   // Login button
-                  ModernLoginButton(
+                  PrimaryButton(
                     onPressed: () async {
                       showDialog(
                         context: context,
