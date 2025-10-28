@@ -9,7 +9,9 @@ import 'package:turbo_waiter/core/helpers/app_texts.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';
 import 'package:turbo_waiter/core/routing/routes.dart';
 import 'package:turbo_waiter/core/theming/styles.dart';
+import 'package:turbo_waiter/core/widgets/custom_dialog.dart';
 import 'package:turbo_waiter/features/auth/presentation/logic/cubit/auth_cubit.dart';
+import 'package:turbo_waiter/features/auth/presentation/view/choose_sheft.dart';
 import 'package:turbo_waiter/features/auth/presentation/widgets/login_widgets/modern_input_field.dart';
 import 'package:turbo_waiter/features/auth/presentation/widgets/login_widgets/modern_login_button.dart';
 import 'package:turbo_waiter/features/auth/presentation/widgets/login_widgets/modern_login_footer.dart';
@@ -229,21 +231,13 @@ class LoginScreen extends StatelessWidget {
                   // Login button
                   ModernLoginButton(
                     onPressed: () async {
-                      // await context
-                      //     .read<AuthCubit>()
-                      //     .checkLoginFormValidation();
-                      context.pushReplacementNamed(Routes.homeScreen);
+                      showDialog(
+                        context: context,
+                        builder: (context) => ChooseCShift(),
+                      );
+                      // context.pushReplacementNamed(Routes.homeScreen);
                     },
                   ),
-
-                  SizedBox(height: isTablet ? 4.h : 3.h),
-
-                  // Social login
-                  // const ModernSocialLogin(),
-                  SizedBox(height: 20.h),
-
-                  // Footer with links
-                  // const ModernLoginFooter(),
                 ],
               ),
             ),
