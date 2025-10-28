@@ -16,17 +16,9 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isTablet = screenWidth > 768;
-
-    // Responsive sizing
-    final buttonHeight = isTablet ? 50.h : 40.h;
-    final fontSize = isTablet ? 20.sp : 18.sp;
-    final loadingSize = isTablet ? 70.w : 60.w;
-
     return Container(
       width: double.infinity,
-      height: buttonHeight,
+      height: 48.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: const LinearGradient(
@@ -70,8 +62,8 @@ class PrimaryButton extends StatelessWidget {
             child: Center(
               child: isLoading
                   ? SizedBox(
-                      width: loadingSize,
-                      height: loadingSize,
+                      width: 70.w,
+                      height: 70.w,
                       child: CircularProgressIndicator(
                         strokeWidth: 3,
                         valueColor: AlwaysStoppedAnimation<Color>(
@@ -82,7 +74,7 @@ class PrimaryButton extends StatelessWidget {
                   : Text(
                       buttonText ?? AppTexts.login,
                       style: TextStyle(
-                        fontSize: fontSize,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontFamily: 'tajawal',

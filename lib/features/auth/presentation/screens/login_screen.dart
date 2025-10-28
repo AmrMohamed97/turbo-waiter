@@ -27,11 +27,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final isTablet = screenWidth > 768;
-    final isLandscape = screenWidth > screenHeight;
-
     return PopScope(
       canPop: canReturn,
       onPopInvokedWithResult: (didPop, result) async {
@@ -45,10 +40,7 @@ class LoginScreen extends StatelessWidget {
           child: Center(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: isTablet ? 6.w : 8.w,
-                  vertical: isTablet ? 2.h : 4.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20).w,
                 child: _buildTabletLandscapeLayout(context),
               ),
             ),
@@ -96,9 +88,7 @@ class LoginScreen extends StatelessWidget {
             ],
           ),
         ),
-
         SizedBox(width: 20.w),
-
         // Right side - Login form
         Expanded(flex: 3, child: _buildLoginForm(context)),
       ],
@@ -106,27 +96,18 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _buildLoginForm(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isTablet = screenWidth > 768;
-    final isLandscape = screenWidth > MediaQuery.of(context).size.height;
-
     return Column(
       children: [
         Text(
           AppTexts.loginUsingEmailOrPhone,
           style: TextStyles.font16BlackBold.copyWith(
             color: Colors.white,
-            fontSize: isTablet ? 20.sp : 16.sp,
+            fontSize: 20.sp,
           ),
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: isTablet ? 30 : 20),
+        SizedBox(height: 30.h),
         Container(
-          constraints: BoxConstraints(
-            maxWidth: isTablet
-                ? (isLandscape ? 0.4 * screenWidth : 0.6 * screenWidth)
-                : 0.9 * screenWidth,
-          ),
           padding: EdgeInsets.all(16.w),
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.1),
@@ -238,9 +219,7 @@ class LoginScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  SizedBox(height: 20.h),
-
-                  SizedBox(height: 40.h),
+                  SizedBox(height: 30.h),
 
                   // Login button
                   PrimaryButton(
