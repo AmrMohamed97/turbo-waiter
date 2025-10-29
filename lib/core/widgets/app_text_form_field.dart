@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:turbo_waiter/core/theming/styles.dart';
-
-import '../theming/colors.dart';
 
 class AppTextFormField extends StatelessWidget {
   const AppTextFormField({
@@ -57,78 +54,116 @@ class AppTextFormField extends StatelessWidget {
   final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      initialValue: initialValue,
-      cursorColor: cursorColor ?? ColorsManager.gray1_2,
-      cursorHeight: cursorHeight,
-      focusNode: focusNode,
-      textAlign: textAlign ?? TextAlign.start,
-      inputFormatters: inputFormatters,
-      onTapOutside: (pointerDownEvent) =>
-          FocusManager.instance.primaryFocus?.unfocus(),
-      controller: controller,
-      keyboardType: keyboard,
+    // final screenWidth = MediaQuery.of(context).size.width;
+    // final isTablet = screenWidth > 768;
 
-      decoration: InputDecoration(
-        isDense: true,
-        border: InputBorder.none,
-        labelText: label,
-        floatingLabelAlignment: FloatingLabelAlignment.start,
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        floatingLabelStyle: TextStyle(
-          color: Theme.of(context).primaryColor,
-          fontSize: 24.sp,
-        ),
-        contentPadding:
-            contentPadding ??
-            EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-        focusedBorder:
-            focusedBorder ??
-            OutlineInputBorder(
-              borderRadius: BorderRadius.circular(borderRadius ?? 16.0),
-              borderSide: const BorderSide(
-                color: ColorsManager.lightGray,
-                width: 1.3,
-              ),
+    // // Responsive font sizes
+    // final labelSize = isTablet ? 16.sp : 15.sp;
+    // final inputSize = isTablet ? 18.sp : 16.sp;
+    // final hintSize = isTablet ? 17.sp : 15.sp;
+
+    // // Responsive padding
+    // final horizontalPadding = isTablet ? 5.w : 4.w;
+    // final verticalPadding = isTablet ? 4.h : 3.h;
+    // final iconPadding = isTablet ? 3.w : 2.w;
+    // final iconMargin = isTablet ? 5.w : 4.w;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Label with white text to match modern theme
+        if (label != null) ...[
+          Text(
+            label!,
+            style:
+                labelStyle ??
+                TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'tajawal',
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 5,
+                      offset: const Offset(0, 1),
+                    ),
+                  ],
+                ),
+          ),
+          SizedBox(height: 10.h),
+        ],
+
+        // Input field with glassmorphism effect
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius ?? 16),
+            color: (backgroundColor ?? Colors.white).withValues(alpha: 0.15),
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.3),
+              width: 1.5,
             ),
-        enabledBorder:
-            enabledBorder ??
-            OutlineInputBorder(
-              borderRadius: BorderRadius.circular(borderRadius ?? 2.w),
-              borderSide: const BorderSide(
-                color: ColorsManager.lightGray,
-                width: 1.3,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
               ),
+            ],
+          ),
+          child: TextFormField(
+            initialValue: initialValue,
+            cursorColor: cursorColor ?? Colors.white,
+            cursorHeight: cursorHeight,
+
+            focusNode: focusNode,
+            textAlign: textAlign ?? TextAlign.start,
+            inputFormatters: inputFormatters,
+            onTapOutside: (pointerDownEvent) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
+            controller: controller,
+            keyboardType: keyboard,
+            obscureText: isObscureText ?? false,
+            style:
+                inputTextStyle ??
+                TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontFamily: 'tajawal',
+                  fontWeight: FontWeight.w500,
+                ),
+            validator: validator,
+            maxLines: maxLines ?? 1,
+            onChanged: onChanged,
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle:
+                  hintStyle ??
+                  TextStyle(
+                    color: Colors.white.withValues(alpha: 0.7),
+                    fontSize: 16.sp,
+                    fontFamily: 'tajawal',
+                  ),
+              prefixIcon: prefixIcon != null
+                  ? Container(
+                      margin: EdgeInsets.all(5.w),
+                      padding: EdgeInsets.all(2.w),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: prefixIcon,
+                    )
+                  : null,
+              suffixIcon: suffixIcon,
+              border: InputBorder.none,
+              contentPadding:
+                  contentPadding ??
+                  EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
             ),
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1.3),
-          borderRadius: BorderRadius.circular(borderRadius ?? 16.0),
+          ),
         ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1.3),
-          borderRadius: BorderRadius.circular(borderRadius ?? 16.0),
-        ),
-        hintStyle:
-            hintStyle ??
-            Theme.of(
-              context,
-            ).textTheme.titleSmall?.copyWith(color: Colors.black),
-        hintText: hintText,
-        suffixIcon: suffixIcon,
-        prefixIcon: prefixIcon,
-        filled: true,
-        fillColor: backgroundColor ?? ColorsManager.moreLightGray,
-        labelStyle:
-            labelStyle ??
-            Theme.of(
-              context,
-            ).textTheme.titleSmall?.copyWith(color: Colors.black),
-      ),
-      obscureText: isObscureText ?? false,
-      style: inputTextStyle ?? TextStyles.font16BlackBold,
-      validator: validator,
-      maxLines: maxLines ?? 1,
-      onChanged: onChanged,
+      ],
     );
   }
 }

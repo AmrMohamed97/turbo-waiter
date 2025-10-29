@@ -8,6 +8,7 @@ import 'package:turbo_waiter/features/auth/presentation/screens/login_screen.dar
 import 'package:turbo_waiter/features/home/presentation/pages/home_screen.dart';
 import 'package:turbo_waiter/features/splash/presentation/logic/splash_cubit.dart';
 import 'package:turbo_waiter/features/splash/presentation/screens/splash_screen.dart';
+import 'package:turbo_waiter/features/tables/presentation/page/tables_page.dart';
 
 class AppRouter {
   static Route generateRoute(RouteSettings settings) {
@@ -36,6 +37,9 @@ class AppRouter {
 
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+
+      case Routes.tablesPage:
+        return MaterialPageRoute(builder: (_) => const TablesPage());
       // case Routes.qrCodeScannerScreen:
       //   Map<String, dynamic>? params =
       //       settings.arguments as Map<String, dynamic>?;

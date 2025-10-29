@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
-import 'package:turbo_waiter/core/helpers/spacing.dart';
 import 'package:turbo_waiter/core/helpers/widget_extensions.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
 import 'package:turbo_waiter/core/theming/font_weight_helper.dart';

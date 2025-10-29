@@ -7,4 +7,5 @@ class Routes {
   static const String homeScreen = '/homeScreen';
   static const String qrCodeScannerScreen = '/qrCodeScannerScreen';
   static const String ticketStatusPage = '/ticketStatusPage';
+  static const String tablesPage = '/tablesPage';
 }

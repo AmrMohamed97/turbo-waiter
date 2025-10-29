@@ -30,11 +30,6 @@ class EnhancedSplashContent extends StatefulWidget {
 class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final isTablet = screenWidth > 768;
-    final isLandscape = screenWidth > screenHeight;
-
     return Stack(
       children: [
         // Animated background particles
@@ -44,11 +39,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
         _buildSparkleEffects(),
 
         // Main content - responsive layout
-        Center(
-          child: isTablet && isLandscape
-              ? _buildTabletLandscapeLayout()
-              : _buildMobileLayout(),
-        ),
+        Center(child: _buildTabletLandscapeLayout()),
       ],
     );
   }
@@ -81,25 +72,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
     );
   }
 
-  Widget _buildMobileLayout() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Logo
-        _buildAnimatedLogo(),
 
-        SizedBox(height: 6.h),
-
-        // App name with fade animation
-        _buildAppName(),
-
-        SizedBox(height: 4.h),
-
-        // Loading indicator
-        _buildLoadingIndicator(),
-      ],
-    );
-  }
 
   Widget _buildAnimatedParticles() {
     return AnimatedBuilder(
@@ -152,12 +125,14 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.white.withOpacity(0.3),
+                      color: Colors.white.withValues(alpha: 0.3),
                       blurRadius: 20,
                       spreadRadius: 5,
                     ),
                     BoxShadow(
-                      color: ColorsManager.secondaryColor.withOpacity(0.4),
+                      color: ColorsManager.secondaryColor.withValues(
+                        alpha: 0.4,
+                      ),
                       blurRadius: 30,
                       spreadRadius: 10,
                     ),
@@ -172,8 +147,8 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Colors.white.withOpacity(0.9),
-                          Colors.white.withOpacity(0.7),
+                          Colors.white.withValues(alpha: 0.9),
+                          Colors.white.withValues(alpha: 0.7),
                         ],
                       ),
                     ),
@@ -233,7 +208,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
                   letterSpacing: 3,
                   shadows: [
                     Shadow(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha: 0.3),
                       blurRadius: 15,
                       offset: const Offset(0, 3),
                     ),
@@ -245,7 +220,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
                 'Fast • Smart • Reliable',
                 style: TextStyle(
                   fontSize: subtitleSize,
-                  color: Colors.white.withOpacity(0.9),
+                  color: Colors.white.withValues(alpha: 0.9),
                   fontFamily: 'tajawal',
                   letterSpacing: 2,
                   fontWeight: FontWeight.w500,
@@ -256,7 +231,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
                 'Tablet-Optimized Restaurant Experience',
                 style: TextStyle(
                   fontSize: taglineSize,
-                  color: Colors.white.withOpacity(0.7),
+                  color: Colors.white.withValues(alpha: 0.7),
                   fontFamily: 'tajawal',
                   letterSpacing: 1,
                   fontStyle: FontStyle.italic,
@@ -292,7 +267,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
             height: indicatorHeight,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(indicatorHeight / 2),
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withValues(alpha: 0.3),
             ),
             child: AnimatedBuilder(
               animation: widget.particleAnimation,
@@ -301,7 +276,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
                   value: widget.particleAnimation.value,
                   backgroundColor: Colors.transparent,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.white.withOpacity(0.8),
+                    Colors.white.withValues(alpha: 0.8),
                   ),
                 );
               },
@@ -322,7 +297,7 @@ class ParticlePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.1)
+      ..color = Colors.white.withValues(alpha: 0.1)
       ..style = PaintingStyle.fill;
 
     final random = math.Random(42); // Fixed seed for consistent particles
@@ -340,7 +315,9 @@ class ParticlePainter extends CustomPainter {
         Offset(x, y),
         radius,
         paint
-          ..color = Colors.white.withOpacity(0.1 + random.nextDouble() * 0.2),
+          ..color = Colors.white.withValues(
+            alpha: 0.1 + random.nextDouble() * 0.2,
+          ),
       );
     }
   }
@@ -358,7 +335,7 @@ class SparklePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = ColorsManager.secondaryColor.withOpacity(0.6)
+      ..color = ColorsManager.secondaryColor.withValues(alpha: 0.6)
       ..style = PaintingStyle.fill;
 
     final random = math.Random(123); // Fixed seed for consistent sparkles
@@ -373,7 +350,9 @@ class SparklePainter extends CustomPainter {
           Offset(x, y),
           3 + opacity * 2,
           paint
-            ..color = ColorsManager.secondaryColor.withOpacity(opacity * 0.8),
+            ..color = ColorsManager.secondaryColor.withValues(
+              alpha: opacity * 0.8,
+            ),
         );
       }
     }

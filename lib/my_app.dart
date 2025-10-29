@@ -6,7 +6,6 @@ import 'package:turbo_waiter/core/helpers/app_initialization.dart';
 import 'package:turbo_waiter/core/helpers/app_texts.dart';
 import 'package:turbo_waiter/core/routing/app_router.dart';
 import 'package:turbo_waiter/core/routing/routes.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
