@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turbo_waiter/core/helpers/extensions.dart';
+import 'package:turbo_waiter/core/helpers/widget_extensions.dart';
 import 'package:turbo_waiter/core/routing/routes.dart';
 import 'package:turbo_waiter/core/widgets/custom_dialog.dart';
 import 'package:turbo_waiter/core/theming/colors.dart';
@@ -58,8 +59,16 @@ class _ChooseCShiftState extends State<ChooseCShift>
       title: 'يرجي تحديد الشيفت المناسب',
       children: [
         const SizedBox(height: 20),
-        ...shifts.map((shift) => _buildShiftItem(shift)),
-        const SizedBox(height: 20),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: shifts.length,
+          itemBuilder: (context, index) {
+            final shift = shifts[index];
+            return _buildShiftItem(shift);
+          },
+        ).expand(),
+        // ...shifts.map((shift) => _buildShiftItem(shift)),
+        // const SizedBox(height: 20),
         PrimaryButton(
           onPressed: () {
             context.pushReplacementNamed(Routes.tablesPage);

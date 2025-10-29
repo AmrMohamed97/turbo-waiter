@@ -37,10 +37,10 @@ class TablesPage extends StatelessWidget {
                 Expanded(
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      crossAxisSpacing: 16.w,
-                      mainAxisSpacing: 16.h,
-                      childAspectRatio: 1,
+                      crossAxisCount: 5,
+                      crossAxisSpacing: 20.w,
+                      mainAxisSpacing: 20.h,
+                      childAspectRatio: 1.5,
                     ),
                     itemCount: tables.length,
                     itemBuilder: (context, index) {

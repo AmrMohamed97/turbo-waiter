@@ -72,25 +72,7 @@ class _EnhancedSplashContentState extends State<EnhancedSplashContent> {
     );
   }
 
-  Widget _buildMobileLayout() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Logo
-        _buildAnimatedLogo(),
 
-        SizedBox(height: 6.h),
-
-        // App name with fade animation
-        _buildAppName(),
-
-        SizedBox(height: 4.h),
-
-        // Loading indicator
-        _buildLoadingIndicator(),
-      ],
-    );
-  }
 
   Widget _buildAnimatedParticles() {
     return AnimatedBuilder(
