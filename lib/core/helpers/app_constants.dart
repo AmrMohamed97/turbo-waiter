@@ -6,6 +6,7 @@ class AppConstants {
   static const String firstTime = 'firstTime';
   static const String userType = 'userType';
   static const String userEmail = 'userEmail';
-  static const String ticketIdKey = 'ticketIdKey';
-}
+    static const String ticketIdKey = 'ticketIdKey';
+    static const String imageLink = 'https://turbo-waiter.s3.eu-central-1.amazonaws.com/';
+  }
 

@@ -7,6 +7,7 @@ environment:
   sdk: ^3.9.2
 
 dependencies:
+  animated_snack_bar: ^0.4.0
   cached_network_image: ^3.4.1
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
@@ -19,20 +20,19 @@ dependencies:
     sdk: flutter
   flutter_animate: ^4.5.2
   flutter_bloc: ^9.1.1
+  flutter_blurhash: ^0.9.1
+  flutter_screenutil: ^5.9.3
   flutter_secure_storage: ^9.2.4
   flutter_svg: ^2.2.1
   get_it: ^8.2.0
   http_parser: ^4.1.2
   intl: null
   json_annotation: null
-  # keyboard_avoider: ^1.0.0
   lottie: ^3.3.2
-  # mobile_scanner: ^7.1.2
+  photo_view: ^0.15.0
   pretty_dio_logger: ^1.4.0
-  # responsive_sizer: ^3.3.1
   retrofit: null
   skeletonizer: ^2.1.0+1
-  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   build_runner: null

@@ -14,10 +14,12 @@ class HomeLoaded extends HomeState {
   final String customerName;
   final String selectedOrderType;
   final List<OrderItem> orderItems;
-  final List<CategoryItem> categories;
+  final List<CategoryItemEntity> categories;
+  final List<SubCategoryEntity> subCategories;
   final bool isLoading;
 
   const HomeLoaded({
+    this.subCategories = const [],
     this.searchQuery = '',
     this.customerName = '',
     this.selectedOrderType = 'داخل المطعم',
@@ -34,6 +36,7 @@ class HomeLoaded extends HomeState {
     orderItems,
     categories,
     isLoading,
+    subCategories,
   ];
 
   HomeLoaded copyWith({
@@ -41,8 +44,9 @@ class HomeLoaded extends HomeState {
     String? customerName,
     String? selectedOrderType,
     List<OrderItem>? orderItems,
-    List<CategoryItem>? categories,
+    List<CategoryItemEntity>? categories,
     bool? isLoading,
+    List<SubCategoryEntity>? subCategories,
   }) {
     return HomeLoaded(
       searchQuery: searchQuery ?? this.searchQuery,
@@ -51,38 +55,9 @@ class HomeLoaded extends HomeState {
       orderItems: orderItems ?? this.orderItems,
       categories: categories ?? this.categories,
       isLoading: isLoading ?? this.isLoading,
+      subCategories: subCategories ?? this.subCategories,
     );
   }
 }
 
-class OrderItem {
-  final String id;
-  final String name;
-  final int quantity;
-  final double price;
 
-  const OrderItem({
-    required this.id,
-    required this.name,
-    required this.quantity,
-    required this.price,
-  });
-
-  List<Object> get props => [id, name, quantity, price];
-}
-
-class CategoryItem {
-  final String id;
-  final String name;
-  final String imagePath;
-  final String color;
-
-  const CategoryItem({
-    required this.id,
-    required this.name,
-    required this.imagePath,
-    required this.color,
-  });
-
-  List<Object> get props => [id, name, imagePath, color];
-}
