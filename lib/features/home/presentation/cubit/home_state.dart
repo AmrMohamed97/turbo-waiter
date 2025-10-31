@@ -10,15 +10,15 @@ abstract class HomeState extends Equatable {
 class HomeInitial extends HomeState {}
 
 class HomeLoaded extends HomeState {
-  final String searchQuery;
-  final String customerName;
-  final String selectedOrderType;
-  final List<OrderItem> orderItems;
-  final List<CategoryItemEntity> categories;
-  final List<SubCategoryEntity> subCategories;
-  final bool isLoading;
+  String searchQuery;
+  String customerName;
+  String selectedOrderType;
+  List<OrderItem> orderItems = [];
+  List<CategoryItemEntity> categories = [];
+  List<SubCategoryEntity> subCategories = [];
+  bool isLoading = false;
 
-  const HomeLoaded({
+  HomeLoaded({
     this.subCategories = const [],
     this.searchQuery = '',
     this.customerName = '',
@@ -59,5 +59,3 @@ class HomeLoaded extends HomeState {
     );
   }
 }
-
-

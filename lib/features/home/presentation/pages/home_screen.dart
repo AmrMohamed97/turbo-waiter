@@ -17,9 +17,9 @@ class HomeScreen extends StatelessWidget {
           child: Row(
             children: [
               // Left Column - Order Panel
-              Expanded(flex: 1, child: const OrderPanelWidget()),
+              Expanded(flex: 2, child: const OrderPanelWidget()),
               // Right Column - Menu Grid
-              Expanded(flex: 2, child: const MenuSectionWidget()),
+              Expanded(flex: 3, child: const MenuSectionWidget()),
             ],
           ),
         ),

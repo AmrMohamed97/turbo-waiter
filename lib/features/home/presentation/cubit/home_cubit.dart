@@ -14,7 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void _initializeData() {
-    emit(HomeLoaded(categories: categories, subCategories: subCategories));
+    emit(HomeLoaded(categories: categories, subCategories: []));
   }
 
   void updateSearchQuery(String query) {
@@ -65,7 +65,20 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void onCategorySelected(String categoryId) {
-    
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final updatedSubCategories = subCategories.where((subCategory) {
+        return subCategory.categoryId == categoryId;
+      }).toList();
+      emit(currentState.copyWith(subCategories: updatedSubCategories));
+    }
+  }
+
+  void clearSubCategories() {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      emit(currentState.copyWith(subCategories: []));
+    }
   }
 
   void onAddCustomer() {
@@ -88,7 +101,104 @@ class HomeCubit extends Cubit<HomeState> {
     // Handle end shift action
   }
 
-  void onProceedToPayment() {
+  void onConfirmCart() {
     // Handle proceed to payment action
+  }
+
+  void onSubCategorySelected(SubCategoryEntity subcategory) {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final List<OrderItem> updatedOrderItems = List<OrderItem>.from(
+        currentState.orderItems,
+      );
+
+      final int existingIndex = updatedOrderItems.indexWhere(
+        (item) => item.id == subcategory.id,
+      );
+
+      if (existingIndex == -1) {
+        updatedOrderItems.add(
+          OrderItem(
+            id: subcategory.id,
+            name: subcategory.name,
+            price: subcategory.price,
+            quantity: 1,
+          ),
+        );
+      } else {
+        final OrderItem existing = updatedOrderItems[existingIndex];
+        updatedOrderItems[existingIndex] = existing.copyWith(
+          quantity: existing.quantity + 1,
+        );
+      }
+
+      emit(currentState.copyWith(orderItems: updatedOrderItems));
+    }
+  }
+
+  void onRemoveItem(OrderItem orderItem) {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final List<OrderItem> updatedOrderItems = List<OrderItem>.from(
+        currentState.orderItems,
+      );
+
+      updatedOrderItems.removeWhere((element) {
+        return element.id == orderItem.id;
+      });
+      emit(currentState.copyWith(orderItems: updatedOrderItems));
+    }
+  }
+
+  void onIncrementItem(OrderItem item) {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final List<OrderItem> updatedOrderItems = List<OrderItem>.from(
+        currentState.orderItems,
+      );
+
+      int existingIndex = updatedOrderItems.indexWhere(
+        (element) => element.id == item.id,
+      );
+      SubCategoryEntity subCategory = subCategories.firstWhere(
+        (element) => element.id == item.id,
+      );
+
+      if (existingIndex != -1) {
+        if (updatedOrderItems[existingIndex].quantity < subCategory.quantity) {
+          updatedOrderItems[existingIndex] = updatedOrderItems[existingIndex]
+              .copyWith(
+                quantity: updatedOrderItems[existingIndex].quantity + 1,
+              );
+        } else {
+          updatedOrderItems[existingIndex] = updatedOrderItems[existingIndex]
+              .copyWith(
+                quantity: updatedOrderItems[existingIndex].quantity - 1,
+              );
+        }
+      }
+      emit(currentState.copyWith(orderItems: updatedOrderItems));
+    }
+  }
+
+  void onDecrementItem(OrderItem item) {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final List<OrderItem> updatedOrderItems = List<OrderItem>.from(
+        currentState.orderItems,
+      );
+      int existingIndex = updatedOrderItems.indexWhere(
+        (element) => element.id == item.id,
+      );
+      if (existingIndex != -1) {
+        if (updatedOrderItems[existingIndex].quantity > 1) {
+          updatedOrderItems[existingIndex] = updatedOrderItems[existingIndex]
+              .copyWith(
+                quantity: updatedOrderItems[existingIndex].quantity - 1,
+              );
+        }
+      }
+      emit(currentState.copyWith(orderItems: updatedOrderItems));
+    }
   }
 }

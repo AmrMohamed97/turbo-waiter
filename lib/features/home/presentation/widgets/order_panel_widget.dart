@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:turbo_waiter/core/widgets/app_text_form_field.dart';
+import 'package:turbo_waiter/core/widgets/ui_helper.dart';
 import 'package:turbo_waiter/features/home/domain/entities/order_items.dart';
 import 'package:turbo_waiter/features/home/presentation/view/order_pannel_header.dart';
 import '../../../../core/theming/colors.dart';
@@ -58,9 +60,9 @@ class OrderPanelWidget extends StatelessWidget {
           // Customer Information
           _buildCustomerSection(context, state),
           SizedBox(height: 16.h),
-          // Order Type
-          _buildOrderTypeSection(context, state),
-          SizedBox(height: 24.h),
+          // // Order Type
+          // _buildOrderTypeSection(context, state),
+          // SizedBox(height: 24.h),
           // Order Details Table
           _buildOrderDetailsSection(context, state),
           SizedBox(height: 16.h),
@@ -79,93 +81,64 @@ class OrderPanelWidget extends StatelessWidget {
           children: [
             Icon(Icons.people, color: ColorsManager.orange2, size: 20.sp),
             SizedBox(width: 8.w),
-            Text('العملاء', style: TextStyles.font16WhiteBold),
+            Text('اسم العميل', style: TextStyles.font16WhiteBold),
           ],
         ),
         SizedBox(height: 8.h),
-        TextField(
-          onChanged: (value) {
-            context.read<HomeCubit>().updateCustomerName(value);
-          },
-          decoration: InputDecoration(
-            hintText: 'test',
-            hintStyle: TextStyles.font14WhiteBold.copyWith(
-              color: Colors.white.withValues(alpha: 0.7),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(
-                color: Colors.white.withValues(alpha: 0.3),
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(
-                color: Colors.white.withValues(alpha: 0.3),
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(
-                color: Colors.white.withValues(alpha: 0.6),
-              ),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 12.h,
-            ),
-          ),
+        AppTextFormField(
+          hintText: 'اسم العميل',
+          prefixIcon: Icon(Icons.person, color: Colors.white),
         ),
       ],
     );
   }
 
-  Widget _buildOrderTypeSection(BuildContext context, HomeLoaded state) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              Icons.restaurant_menu,
-              color: ColorsManager.orange2,
-              size: 20.sp,
-            ),
-            SizedBox(width: 8.w),
-            Text('نوع الطلب', style: TextStyles.font16WhiteBold),
-          ],
-        ),
-        SizedBox(height: 8.h),
-        GestureDetector(
-          onTap: () {
-            _showOrderTypeDialog(context);
-          },
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.1),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  state.selectedOrderType,
-                  style: TextStyles.font15WhiteMedium,
-                ),
-                Icon(
-                  Icons.keyboard_arrow_down,
-                  color: Colors.white.withValues(alpha: 0.7),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildOrderTypeSection(BuildContext context, HomeLoaded state) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Row(
+  //         children: [
+  //           Icon(
+  //             Icons.restaurant_menu,
+  //             color: ColorsManager.orange2,
+  //             size: 20.sp,
+  //           ),
+  //           SizedBox(width: 8.w),
+  //           Text('نوع الطلب', style: TextStyles.font16WhiteBold),
+  //         ],
+  //       ),
+  //       SizedBox(height: 8.h),
+  //       GestureDetector(
+  //         onTap: () {
+  //           _showOrderTypeDialog(context);
+  //         },
+  //         child: Container(
+  //           width: double.infinity,
+  //           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+  //           decoration: BoxDecoration(
+  //             color: Colors.white.withValues(alpha: 0.1),
+  //             border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+  //             borderRadius: BorderRadius.circular(12.r),
+  //           ),
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //             children: [
+  //               Text(
+  //                 state.selectedOrderType,
+  //                 style: TextStyles.font15WhiteMedium,
+  //               ),
+  //               Icon(
+  //                 Icons.keyboard_arrow_down,
+  //                 color: Colors.white.withValues(alpha: 0.7),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildOrderDetailsSection(BuildContext context, HomeLoaded state) {
     return Expanded(
@@ -187,6 +160,7 @@ class OrderPanelWidget extends StatelessWidget {
             ),
             child: Row(
               children: [
+                SizedBox(width: 32.w),
                 Expanded(
                   flex: 2,
                   child: Text(
@@ -265,17 +239,43 @@ class OrderPanelWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            flex: 2,
-            child: Text(item.name, style: TextStyles.font14WhiteBold),
-          ),
-          Expanded(
-            child: Text(
-              item.quantity.toString(),
-              style: TextStyles.font14WhiteBold,
-              textAlign: TextAlign.center,
+          GestureDetector(
+            onTap: () => context.read<HomeCubit>().onRemoveItem(item),
+            child: Icon(
+              Icons.delete_outline_sharp,
+              color: Colors.white,
+              size: 24.sp,
             ),
           ),
+          SizedBox(width: 8.w),
+          Expanded(
+            flex: 2,
+            child: Text(item.name, style: TextStyles.font17WhiteBold),
+          ),
+          Container(
+            decoration: UIHelper.liqiudBoxDecoration(),
+            child: Row(
+              children: [
+                IconButton(
+                  padding: EdgeInsets.all(5),
+                  onPressed: () =>
+                      context.read<HomeCubit>().onIncrementItem(item),
+                  icon: Icon(Icons.add, color: Colors.white, size: 14.sp),
+                ),
+                Text(
+                  item.quantity.toString(),
+                  style: TextStyles.font17WhiteBold,
+                ),
+                IconButton(
+                  padding: EdgeInsets.all(5),
+                  onPressed: () =>
+                      context.read<HomeCubit>().onDecrementItem(item),
+                  icon: Icon(Icons.remove, color: Colors.white, size: 14.sp),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 10),
           Expanded(
             child: Text(
               '${item.price.toStringAsFixed(2)} ر.س',
@@ -312,7 +312,7 @@ class OrderPanelWidget extends StatelessWidget {
         Expanded(
           child: ElevatedButton(
             onPressed: () {
-              context.read<HomeCubit>().onProceedToPayment();
+              context.read<HomeCubit>().onConfirmCart();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white.withValues(alpha: 0.2),
@@ -323,40 +323,40 @@ class OrderPanelWidget extends StatelessWidget {
                 side: BorderSide(color: Colors.white.withValues(alpha: 0.4)),
               ),
             ),
-            child: Text('انتقل للدفع', style: TextStyles.font16WhiteBold),
+            child: Text("تاكيد الطلب", style: TextStyles.font16WhiteBold),
           ),
         ),
       ],
     );
   }
 
-  void _showOrderTypeDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          'اختر نوع الطلب',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildOrderTypeOption(context, 'داخل المطعم'),
-            _buildOrderTypeOption(context, 'توصيل'),
-            _buildOrderTypeOption(context, 'استلام'),
-          ],
-        ),
-      ),
-    );
-  }
+  // void _showOrderTypeDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: Text(
+  //         'اختر نوع الطلب',
+  //         style: Theme.of(context).textTheme.titleLarge,
+  //       ),
+  //       content: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           _buildOrderTypeOption(context, 'داخل المطعم'),
+  //           _buildOrderTypeOption(context, 'توصيل'),
+  //           _buildOrderTypeOption(context, 'استلام'),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _buildOrderTypeOption(BuildContext context, String orderType) {
-    return ListTile(
-      title: Text(orderType),
-      onTap: () {
-        context.read<HomeCubit>().updateOrderType(orderType);
-        Navigator.pop(context);
-      },
-    );
-  }
+  // Widget _buildOrderTypeOption(BuildContext context, String orderType) {
+  //   return ListTile(
+  //     title: Text(orderType),
+  //     onTap: () {
+  //       context.read<HomeCubit>().updateOrderType(orderType);
+  //       Navigator.pop(context);
+  //     },
+  //   );
+  // }
 }

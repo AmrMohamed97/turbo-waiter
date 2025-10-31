@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/features/home/presentation/view/menu_options_view.dart';
+import 'package:turbo_waiter/features/home/presentation/view/sub_category_view.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
 import '../cubit/home_cubit.dart';
@@ -44,7 +45,10 @@ class MenuSectionWidget extends StatelessWidget {
               _buildSearchBar(context, state),
               SizedBox(height: 16.h),
               // Category Grid
-              _buildCategoryGrid(context, state),
+              if (state.subCategories.isEmpty)
+                _buildCategoryGrid(context, state)
+              else
+                SubCategoryView(),
               SizedBox(height: 16.h),
             ],
           ),
