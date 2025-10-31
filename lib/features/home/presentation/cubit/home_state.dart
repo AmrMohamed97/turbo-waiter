@@ -59,3 +59,8 @@ class HomeLoaded extends HomeState {
     );
   }
 }
+
+class ConfirmCartState extends HomeState {
+  @override
+  List<Object> get props => [];
+}

@@ -102,7 +102,12 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void onConfirmCart() {
-    // Handle proceed to payment action
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      if (currentState.orderItems.isNotEmpty) {
+        emit(ConfirmCartState());
+      }
+    }
   }
 
   void onSubCategorySelected(SubCategoryEntity subcategory) {
