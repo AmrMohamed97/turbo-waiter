@@ -1,5 +1,4 @@
 import 'package:turbo_waiter/features/home/domain/entities/categories_entity.dart';
-import 'package:turbo_waiter/features/home/presentation/cubit/home_cubit.dart';
 
 final categories = [
   const CategoryItemEntity(
@@ -53,7 +52,7 @@ final categories = [
   ),
   const CategoryItemEntity(
     id: '8',
-    name: "🍮 الحلويات العراقية",
+    name: " الحلويات العراقية",
     imagePath:
         "https://img.youm7.com/ArticleImgs/2017/7/30/87891-%D8%AD%D9%84%D9%88%D9%8A%D8%A7%D8%AA-%D8%B4%D8%B1%D9%82%D9%8A%D8%A9-%D9%80-%D8%A7%D9%84%D8%AF%D8%A7%D9%84%D8%B7%D9%8A.jpg",
     color: 'orange3',
@@ -61,14 +60,14 @@ final categories = [
 
   const CategoryItemEntity(
     id: '10',
-    name: "🧃 المشروبات بارده",
+    name: " المشروبات بارده",
     imagePath:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3dM6HsEHzEX-ErEptw_q9ou9JFZ74GUxs1Q&s",
     color: 'orange3',
   ),
   const CategoryItemEntity(
     id: '11',
-    name: "🍟 المقبلات الساخنة",
+    name: " المقبلات الساخنة",
     imagePath:
         "https://egf8xpxjy4g.exactdn.com/wp-content/uploads/2022/10/%D9%82%D9%87%D9%88%D8%A9-%D8%B9%D8%A7%D8%B1%D9%81-%D8%A7%D9%88%D8%BA%D9%84%D9%88-1024x707.webp?lossy=1&ssl=1",
     color: 'orange4',
