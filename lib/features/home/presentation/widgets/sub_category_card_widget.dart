@@ -3,17 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turbo_waiter/core/widgets/cashed_images.dart';
 import 'package:turbo_waiter/core/widgets/ui_helper.dart';
 import 'package:turbo_waiter/features/home/domain/entities/categories_entity.dart';
+import 'package:turbo_waiter/features/home/domain/entities/sub_category_entity.dart';
 import '../../../../core/theming/styles.dart';
 import '../../../../gen/assets.gen.dart';
-import '../cubit/home_cubit.dart';
 
-class CategoryCardWidget extends StatelessWidget {
-  final CategoryItemEntity category;
+class SubCategoryCardWidget extends StatelessWidget {
+  final SubCategoryEntity subCategory;
   final VoidCallback onTap;
 
-  const CategoryCardWidget({
+  const SubCategoryCardWidget({
     super.key,
-    required this.category,
+    required this.subCategory,
     required this.onTap,
   });
 
@@ -32,7 +32,7 @@ class CategoryCardWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CachedImage(
-                  url: category.imagePath,
+                  url: subCategory.imagePath ?? '',
                   fit: BoxFit.cover,
                   radius: 16,
                 ),
@@ -44,7 +44,7 @@ class CategoryCardWidget extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  category.name,
+                  subCategory.name,
                   style: TextStyles.font14WhiteBold.copyWith(fontSize: 18.sp),
                   textAlign: TextAlign.center,
                   maxLines: 2,

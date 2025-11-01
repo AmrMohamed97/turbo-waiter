@@ -1,5 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:turbo_waiter/features/home/domain/entities/categories_entity.dart';
+import 'package:turbo_waiter/features/home/domain/entities/order_items.dart';
+import 'package:turbo_waiter/features/home/domain/entities/sub_category_entity.dart';
+import 'package:turbo_waiter/features/home/domain/src/categories.dart';
+import 'package:turbo_waiter/features/home/domain/src/sub_category_entity.dart';
 
 part 'home_state.dart';
 
@@ -9,82 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void _initializeData() {
-    final categories = [
-      const CategoryItem(
-        id: '1',
-        name: 'إيدامات',
-        imagePath: 'assets/images/stew.png',
-        color: 'orange2',
-      ),
-      const CategoryItem(
-        id: '2',
-        name: 'صوصات',
-        imagePath: 'assets/images/sauce.png',
-        color: 'orange3',
-      ),
-      const CategoryItem(
-        id: '3',
-        name: 'مقرمشات',
-        imagePath: 'assets/images/crisps.png',
-        color: 'orange4',
-      ),
-      const CategoryItem(
-        id: '4',
-        name: 'ساندويتشات',
-        imagePath: 'assets/images/sandwich.png',
-        color: 'orange1',
-      ),
-      const CategoryItem(
-        id: '5',
-        name: 'مشروبات',
-        imagePath: 'assets/images/drinks.png',
-        color: 'primaryColor',
-      ),
-      const CategoryItem(
-        id: '6',
-        name: 'حلى',
-        imagePath: 'assets/images/desserts.png',
-        color: 'orange2',
-      ),
-      const CategoryItem(
-        id: '7',
-        name: 'سلطات',
-        imagePath: 'assets/images/salads.png',
-        color: 'green1',
-      ),
-      const CategoryItem(
-        id: '8',
-        name: 'أطباق رئيسية',
-        imagePath: 'assets/images/main_dishes.png',
-        color: 'orange3',
-      ),
-      const CategoryItem(
-        id: '9',
-        name: 'Apps - إيدامات',
-        imagePath: 'assets/images/apps_stew.png',
-        color: 'orange2',
-      ),
-      const CategoryItem(
-        id: '10',
-        name: 'Apps - صوصات',
-        imagePath: 'assets/images/apps_sauce.png',
-        color: 'orange3',
-      ),
-      const CategoryItem(
-        id: '11',
-        name: 'Apps - مقرمشات',
-        imagePath: 'assets/images/apps_crisps.png',
-        color: 'orange4',
-      ),
-      const CategoryItem(
-        id: '12',
-        name: 'Apps - الساندويتشات',
-        imagePath: 'assets/images/apps_sandwich.png',
-        color: 'orange1',
-      ),
-    ];
-
-    emit(HomeLoaded(categories: categories));
+    emit(HomeLoaded(categories: categories, subCategories: []));
   }
 
   void updateSearchQuery(String query) {
@@ -135,8 +65,20 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void onCategorySelected(String categoryId) {
-    // Handle category selection logic here
-    // This could navigate to a category detail screen or show items
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final updatedSubCategories = subCategories.where((subCategory) {
+        return subCategory.categoryId == categoryId;
+      }).toList();
+      emit(currentState.copyWith(subCategories: updatedSubCategories));
+    }
+  }
+
+  void clearSubCategories() {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      emit(currentState.copyWith(subCategories: []));
+    }
   }
 
   void onAddCustomer() {
@@ -159,7 +101,109 @@ class HomeCubit extends Cubit<HomeState> {
     // Handle end shift action
   }
 
-  void onProceedToPayment() {
-    // Handle proceed to payment action
+  void onConfirmCart() {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      if (currentState.orderItems.isNotEmpty) {
+        emit(ConfirmCartState());
+      }
+    }
+  }
+
+  void onSubCategorySelected(SubCategoryEntity subcategory) {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final List<OrderItem> updatedOrderItems = List<OrderItem>.from(
+        currentState.orderItems,
+      );
+
+      final int existingIndex = updatedOrderItems.indexWhere(
+        (item) => item.id == subcategory.id,
+      );
+
+      if (existingIndex == -1) {
+        updatedOrderItems.add(
+          OrderItem(
+            id: subcategory.id,
+            name: subcategory.name,
+            price: subcategory.price,
+            quantity: 1,
+          ),
+        );
+      } else {
+        final OrderItem existing = updatedOrderItems[existingIndex];
+        updatedOrderItems[existingIndex] = existing.copyWith(
+          quantity: existing.quantity + 1,
+        );
+      }
+
+      emit(currentState.copyWith(orderItems: updatedOrderItems));
+    }
+  }
+
+  void onRemoveItem(OrderItem orderItem) {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final List<OrderItem> updatedOrderItems = List<OrderItem>.from(
+        currentState.orderItems,
+      );
+
+      updatedOrderItems.removeWhere((element) {
+        return element.id == orderItem.id;
+      });
+      emit(currentState.copyWith(orderItems: updatedOrderItems));
+    }
+  }
+
+  void onIncrementItem(OrderItem item) {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final List<OrderItem> updatedOrderItems = List<OrderItem>.from(
+        currentState.orderItems,
+      );
+
+      int existingIndex = updatedOrderItems.indexWhere(
+        (element) => element.id == item.id,
+      );
+      SubCategoryEntity subCategory = subCategories.firstWhere(
+        (element) => element.id == item.id,
+      );
+
+      if (existingIndex != -1) {
+        if (updatedOrderItems[existingIndex].quantity < subCategory.quantity) {
+          updatedOrderItems[existingIndex] = updatedOrderItems[existingIndex]
+              .copyWith(
+                quantity: updatedOrderItems[existingIndex].quantity + 1,
+              );
+        } else {
+          updatedOrderItems[existingIndex] = updatedOrderItems[existingIndex]
+              .copyWith(
+                quantity: updatedOrderItems[existingIndex].quantity - 1,
+              );
+        }
+      }
+      emit(currentState.copyWith(orderItems: updatedOrderItems));
+    }
+  }
+
+  void onDecrementItem(OrderItem item) {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      final List<OrderItem> updatedOrderItems = List<OrderItem>.from(
+        currentState.orderItems,
+      );
+      int existingIndex = updatedOrderItems.indexWhere(
+        (element) => element.id == item.id,
+      );
+      if (existingIndex != -1) {
+        if (updatedOrderItems[existingIndex].quantity > 1) {
+          updatedOrderItems[existingIndex] = updatedOrderItems[existingIndex]
+              .copyWith(
+                quantity: updatedOrderItems[existingIndex].quantity - 1,
+              );
+        }
+      }
+      emit(currentState.copyWith(orderItems: updatedOrderItems));
+    }
   }
 }

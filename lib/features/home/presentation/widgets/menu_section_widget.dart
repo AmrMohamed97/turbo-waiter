@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:turbo_waiter/features/home/presentation/view/menu_options_view.dart';
+import 'package:turbo_waiter/features/home/presentation/view/sub_category_view.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
 import '../cubit/home_cubit.dart';
@@ -38,71 +40,20 @@ class MenuSectionWidget extends StatelessWidget {
           child: Column(
             children: [
               // Top Action Buttons
-              _buildActionButtons(context),
+              MenuOptionsView(),
               // Search Bar
               _buildSearchBar(context, state),
               SizedBox(height: 16.h),
               // Category Grid
-              _buildCategoryGrid(context, state),
+              if (state.subCategories.isEmpty)
+                _buildCategoryGrid(context, state)
+              else
+                SubCategoryView(),
               SizedBox(height: 16.h),
             ],
           ),
         );
       },
-    );
-  }
-
-  Widget _buildActionButtons(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      child: Row(
-        children: [
-          ActionButtonWidget(
-            title: 'إضافة عميل',
-            icon: Icons.person_add,
-            color: ColorsManager.orange2,
-            onTap: () {
-              context.read<HomeCubit>().onAddCustomer();
-            },
-          ),
-          SizedBox(width: 12.w),
-          ActionButtonWidget(
-            title: 'الطلبات السابقة',
-            icon: Icons.history,
-            color: ColorsManager.orange2,
-            onTap: () {
-              context.read<HomeCubit>().onViewPreviousOrders();
-            },
-          ),
-          SizedBox(width: 12.w),
-          ActionButtonWidget(
-            title: 'كوبون',
-            icon: Icons.local_offer,
-            color: ColorsManager.orange2,
-            onTap: () {
-              context.read<HomeCubit>().onApplyCoupon();
-            },
-          ),
-          SizedBox(width: 12.w),
-          ActionButtonWidget(
-            title: 'العروض',
-            icon: Icons.percent,
-            color: ColorsManager.orange2,
-            onTap: () {
-              context.read<HomeCubit>().onViewOffers();
-            },
-          ),
-          SizedBox(width: 12.w),
-          ActionButtonWidget(
-            title: 'اغلاق الوردية',
-            icon: Icons.power_settings_new,
-            color: ColorsManager.red1,
-            onTap: () {
-              context.read<HomeCubit>().onEndShift();
-            },
-          ),
-        ],
-      ),
     );
   }
 
