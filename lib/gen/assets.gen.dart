@@ -74,11 +74,27 @@ class $AssetsSvgGen {
   /// File path: assets/svg/error.svg
   String get error => 'assets/svg/error.svg';
 
+  /// File path: assets/svg/fork.svg
+  String get fork => 'assets/svg/fork.svg';
+
+  /// File path: assets/svg/meal.svg
+  String get meal => 'assets/svg/meal.svg';
+
+  /// File path: assets/svg/restaurant_table.svg
+  String get restaurantTable => 'assets/svg/restaurant_table.svg';
+
   /// File path: assets/svg/ticket.svg
   String get ticket => 'assets/svg/ticket.svg';
 
   /// List of all assets
-  List<String> get values => [appSparkle, error, ticket];
+  List<String> get values => [
+    appSparkle,
+    error,
+    fork,
+    meal,
+    restaurantTable,
+    ticket,
+  ];
 }
 
 class Assets {
