@@ -1,6 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:turbo_waiter/core/helpers/extensions.dart';
+import 'package:turbo_waiter/core/routing/routes.dart';
+import 'package:turbo_waiter/core/widgets/ui_helper.dart';
 import 'package:turbo_waiter/features/home/presentation/pages/home_screen.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
@@ -60,7 +63,13 @@ class TablesPage extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
-        Assets.images.appLogoWord.image(height: 40.h),
+        Container(
+          padding: EdgeInsets.all(8.w),
+          decoration: UIHelper.liqiudBoxDecoration().copyWith(
+            color: Colors.white,
+          ),
+          child: Assets.images.appLogoWord.image(height: 40.h),
+        ),
         const Spacer(),
         Text(
           'الطاولات',
@@ -75,7 +84,45 @@ class TablesPage extends StatelessWidget {
             ],
           ),
         ),
-        const Spacer(flex: 2),
+        const Spacer(),
+        Container(
+          padding: EdgeInsets.all(8.w),
+          decoration: UIHelper.liqiudBoxDecoration().copyWith(),
+          child: Column(
+            children: [
+              IconButton(
+                onPressed: () {
+                  //show dialog for confirm logout
+                  showAdaptiveDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      backgroundColor: Colors.white,
+
+                      title: Text('تأكيد الخروج'),
+                      content: Text('هل أنت متأكد من أنك تريد الخروج؟'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            context.pop();
+                          },
+                          child: Text('الإلغاء'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            context.pop();
+                            context.pushReplacementNamed(Routes.loginScreen);
+                          },
+                          child: Text('الخروج'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                icon: Icon(Icons.settings_power_sharp, color: Colors.white),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

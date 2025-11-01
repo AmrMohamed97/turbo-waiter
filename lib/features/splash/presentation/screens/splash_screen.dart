@@ -48,8 +48,12 @@ class _SplashScreenState extends State<SplashScreen>
     await _fadeController.forward();
 
     if (isLogged) {
+      context.pop();
+
       context.pushReplacementNamed(Routes.homeScreen);
     } else {
+      context.pop();
+
       context.pushReplacementNamed(Routes.loginScreen);
     }
   }

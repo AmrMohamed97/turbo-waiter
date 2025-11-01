@@ -71,6 +71,7 @@ class _ChooseCShiftState extends State<ChooseCShift>
         // const SizedBox(height: 20),
         PrimaryButton(
           onPressed: () {
+            context.pop();
             context.pushReplacementNamed(Routes.tablesPage);
           },
           buttonText: "التالي",
