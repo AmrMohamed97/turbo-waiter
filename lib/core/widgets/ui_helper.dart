@@ -118,7 +118,9 @@ class UIHelper {
       ),
     );
   }
-  static BoxDecoration liqiudBoxDecoration() {
+  static BoxDecoration liqiudBoxDecoration(
+    
+  ) {
     return BoxDecoration(
       color: Colors.white.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(16.r),

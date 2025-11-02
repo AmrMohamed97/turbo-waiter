@@ -187,4 +187,11 @@ class ColorsManager {
   static const Color mediumGrey = Color(0XFF6C757D);
   static const Color ter = Color(0xFF33DBA9);
   static const Color bl = Color(0xFF4398EE);
+
+  static const LinearGradient sheetGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFFFF8C00), Color(0xFFDC143C), Color(0xFFB22222)],
+    stops: [0.0, 0.6, 1.0],
+  );
 }

@@ -27,8 +27,7 @@ class SubCategoryCardWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Category Image with Logo
-            AspectRatio(
-              aspectRatio: 1,
+            Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CachedImage(

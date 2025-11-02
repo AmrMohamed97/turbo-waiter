@@ -1,21 +1,22 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:turbo_waiter/core/helpers/extensions.dart';
+import 'package:turbo_waiter/core/routing/routes.dart';
+import 'package:turbo_waiter/core/widgets/ui_helper.dart';
 import 'package:turbo_waiter/features/home/presentation/pages/home_screen.dart';
+import 'package:turbo_waiter/features/tables/domain/src/tabels.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
 import '../../../../gen/assets.gen.dart';
+import '../view/reserved_table_sheet.dart';
 
 class TablesPage extends StatelessWidget {
   const TablesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final tables = List.generate(
-      12,
-      (index) => TableModel(id: index + 1, isReserved: index % 3 == 0),
-    );
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -42,9 +43,9 @@ class TablesPage extends StatelessWidget {
                       mainAxisSpacing: 20.h,
                       childAspectRatio: 1.5,
                     ),
-                    itemCount: tables.length,
+                    itemCount: tempTables.length,
                     itemBuilder: (context, index) {
-                      final table = tables[index];
+                      final table = tempTables[index];
                       return _buildTableCard(context, table);
                     },
                   ),
@@ -60,7 +61,13 @@ class TablesPage extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
-        Assets.images.appLogoWord.image(height: 40.h),
+        Container(
+          padding: EdgeInsets.all(8.w),
+          decoration: UIHelper.liqiudBoxDecoration().copyWith(
+            color: Colors.white,
+          ),
+          child: Assets.images.appLogoWord.image(height: 40.h),
+        ),
         const Spacer(),
         Text(
           'الطاولات',
@@ -75,7 +82,45 @@ class TablesPage extends StatelessWidget {
             ],
           ),
         ),
-        const Spacer(flex: 2),
+        const Spacer(),
+        Container(
+          padding: EdgeInsets.all(8.w),
+          decoration: UIHelper.liqiudBoxDecoration().copyWith(),
+          child: Column(
+            children: [
+              IconButton(
+                onPressed: () {
+                  //show dialog for confirm logout
+                  showAdaptiveDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      backgroundColor: Colors.white,
+
+                      title: Text('تأكيد الخروج'),
+                      content: Text('هل أنت متأكد من أنك تريد الخروج؟'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            context.pop();
+                          },
+                          child: Text('الإلغاء'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            context.pop();
+                            context.pushReplacementNamed(Routes.loginScreen);
+                          },
+                          child: Text('الخروج'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                icon: Icon(Icons.settings_power_sharp, color: Colors.white),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -86,11 +131,16 @@ class TablesPage extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (isReserved) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('الطاولة رقم ${table.id} محجوزة حالياً'),
-              backgroundColor: ColorsManager.orange2,
+          // show model sheet for details options  and some operations
+          showModalBottomSheet(
+            isScrollControlled: true,
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width,
             ),
+            showDragHandle: true,
+            enableDrag: true,
+            context: context,
+            builder: (context) => ReservedTableSheet(table: table),
           );
         } else {
           _navigateToOrderScreen(context, table.id);
@@ -122,15 +172,18 @@ class TablesPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    isReserved
-                        ? Icons.event_busy_rounded
-                        : Icons.event_available_rounded,
-                    color: isReserved
-                        ? ColorsManager.orange2
-                        : Colors.white.withOpacity(0.85),
-                    size: 40.sp,
+                  SvgPicture.asset(
+                    isReserved ? Assets.svg.fork : Assets.svg.restaurantTable,
+                    width: 40.sp,
+                    height: 40.sp,
+                    colorFilter: ColorFilter.mode(
+                      isReserved
+                          ? Colors.white.withValues(alpha: 0.85)
+                          : ColorsManager.orange2,
+                      BlendMode.srcIn,
+                    ),
                   ),
+
                   SizedBox(height: 8.h),
                   Text(
                     'طاولة ${table.id}',
@@ -199,6 +252,15 @@ class TablesPage extends StatelessWidget {
 class TableModel {
   final int id;
   final bool isReserved;
+  final ReservedUser? user;
 
-  TableModel({required this.id, required this.isReserved});
+  TableModel({required this.id, required this.isReserved, this.user});
+}
+
+class ReservedUser {
+  final int userId;
+  final String username;
+  final String? fullName;
+
+  ReservedUser({required this.userId, required this.username, this.fullName});
 }
